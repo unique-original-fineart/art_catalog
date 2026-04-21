@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Catalog</title>
+    <style>
+        :root {
+            --bg: #f5f1ea;
+            --card: rgba(255,255,255,0.82);
+            --text: #1f1a17;
+            --muted: #6f675e;
+            --line: #dbd1c4;
+            --shadow: 0 18px 40px rgba(35, 27, 20, 0.08);
+            --shadow-soft: 0 8px 22px rgba(35, 27, 20, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(255,255,255,0.7), transparent 35%),
+                linear-gradient(180deg, #f7f3ed 0%, #f2ece3 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.45;
+        }
+
+        .page {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 32px 28px 90px;
+        }
+
+        .hero {
+            padding: 4px 0 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .hero-top {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .brand-logo {
+            width: 150px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 8px 18px rgba(0,0,0,0.08));
+        }
+
+        .hero-copy {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+            max-width: 760px;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(28px, 4vw, 48px);
+            line-height: 0.96;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }
+
+        .hero-sub {
+            max-width: 640px;
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .stats-bar {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-top: 24px;
+            padding: 16px 22px;
+            background: var(--card);
+            border: 1px solid rgba(219, 209, 196, 0.85);
+            border-radius: 18px;
+            box-shadow: var(--shadow-soft);
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        .stat-chip {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 0 18px;
+        }
+
+        .stat-chip:first-child {
+            padding-left: 0;
+        }
+
+        .stat-chip:last-child {
+            padding-right: 0;
+        }
+
+        .stat-chip-label {
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .stat-chip-value {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 28px;
+            line-height: 1;
+        }
+
+        .stat-divider {
+            width: 1px;
+            align-self: stretch;
+            background: var(--line);
+            opacity: 0.9;
+        }
+
+        .section {
+            margin-top: 42px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .section h3 {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 30px;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }
+
+        .section-note {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 2fr repeat(5, 1fr);
+            gap: 12px;
+            margin: 0 0 20px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.92);
+            color: var(--text);
+            font-size: 14px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .result-count {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+        }
+
+        .card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(219, 209, 196, 0.85);
+            border-radius: 26px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 24px 48px rgba(35, 27, 20, 0.12);
+        }
+
+        .card:hover .art-img {
+            transform: scale(1.03);
+        }
+
+        .card.hidden {
+            display: none;
+        }
+
+        .card-image-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.6), rgba(239,232,220,0.9));
+            border-bottom: 1px solid var(--line);
+            padding: 22px;
+            min-height: 340px;
+        }
+
+        .art-img {
+            max-width: 100%;
+            max-height: 380px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            background: #f3efe8;
+            border: 6px solid white;
+            border-radius: 8px;
+            box-shadow:
+                0 2px 6px rgba(0,0,0,0.08),
+                0 12px 30px rgba(0,0,0,0.12);
+            transition: transform 0.4s ease;
+        }
+
+        .card-body {
+            padding: 22px 22px 24px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: start;
+        }
+
+        .artist-name {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 30px;
+            line-height: 0.98;
+            letter-spacing: -0.035em;
+            font-weight: 600;
+        }
+
+        .artwork-title {
+            margin-top: 10px;
+            font-size: 16px;
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        .price {
+            white-space: nowrap;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .badge,
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 7px 11px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.92);
+        }
+
+        .badge-muted {
+            color: var(--muted);
+        }
+
+        .status-available {
+            background: #edf6ee;
+        }
+
+        .status-pending {
+            background: #fbf3df;
+        }
+
+        .status-sold {
+            background: #f6e5e5;
+        }
+
+        .specs {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 7px 0;
+        }
+
+        .spec-label {
+            color: var(--muted);
+            font-size: 13px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .spec-value {
+            text-align: right;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .seller {
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .seller-label {
+            color: var(--muted);
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .seller-name {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text);
+        }
+
+        .notes {
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: none;
+            background: #1f1a17;
+            color: #ffffff;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.20);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        #backToTop:hover {
+            opacity: 0.88;
+        }
+
+        @media (max-width: 1100px) {
+            .filters {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 980px) {
+            .hero-top {
+                grid-template-columns: 90px 1fr;
+                gap: 18px;
+            }
+
+            .brand-logo {
+                width: 82px;
+            }
+
+            .stats-bar {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .page {
+                padding: 24px 16px 70px;
+            }
+
+            .hero {
+                padding: 0 0 24px;
+                margin-bottom: 24px;
+            }
+
+            .hero-top {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                align-items: start;
+            }
+
+            .brand {
+                justify-content: flex-start;
+            }
+
+            .brand-logo {
+                width: 74px;
+                max-width: 50%;
+            }
+
+            .hero-copy {
+                max-width: 100%;
+            }
+
+            .hero-sub {
+                margin-top: 10px;
+                font-size: 15px;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                width: 100%;
+                padding: 16px 18px;
+            }
+
+            .stat-chip {
+                padding: 0;
+            }
+
+            .stat-divider {
+                width: 100%;
+                height: 1px;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+                position: static;
+                background: transparent;
+                backdrop-filter: none;
+                padding: 0;
+                margin-bottom: 16px;
+                gap: 10px;
+            }
+
+            .filters input,
+            .filters select {
+                padding: 12px 14px;
+                font-size: 16px;
+            }
+
+            .card-header {
+                flex-direction: column;
+            }
+
+            .price {
+                white-space: normal;
+            }
+
+            .card-image-wrap {
+                min-height: 280px;
+                padding: 18px;
+            }
+
+            .art-img {
+                max-height: 320px;
+            }
+
+            .seller-name {
+                font-size: 17px;
+            }
+
+            #backToTop {
+                bottom: 16px;
+                right: 16px;
+                width: 48px;
+                height: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="hero">
+            <div class="hero-top">
+                <div class="brand">
+                    <img src="assets/logo.png" class="brand-logo" alt="Unique Original Fine Art">
+                </div>
+
+                <div class="hero-copy">
+                    <h1>April Art Listings</h1>
+                    <div class="hero-sub">
+                        Current artworks available for sale from group members.
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-chip">
+                    <span class="stat-chip-label">Available Listings</span>
+                    <span class="stat-chip-value">18</span>
+                </div>
+
+                <div class="stat-divider"></div>
+
+                <div class="stat-chip">
+                    <span class="stat-chip-label">Artists</span>
+                    <span class="stat-chip-value">14</span>
+                </div>
+
+                <div class="stat-divider"></div>
+
+                <div class="stat-chip">
+                    <span class="stat-chip-label">Sellers</span>
+                    <span class="stat-chip-value">6</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="section" id="full-catalog">
+            <div class="section-heading">
+                <h3>Full Catalog</h3>
+                <div class="section-note">Browse by seller, artist, type, price, and recency</div>
+            </div>
+
+            <div class="filters">
+                <input type="text" id="searchInput" placeholder="Search artist, title, seller...">
+                <select id="sellerFilter"><option value="">All Sellers</option><option value="amy goldstein friedman">Amy Goldstein Friedman</option><option value="bill harp">Bill Harp</option><option value="dan cayer">Dan Cayer</option><option value="elmo zoe rufio">Elmo Zoe Rufio</option><option value="guy scuderi">Guy Scuderi</option><option value="macgregor brown">MacGregor Brown</option></select>
+                <select id="artistFilter"><option value="">All Artists</option><option value="alfred gockel">Alfred Gockel</option><option value="anatoly metlan">Anatoly Metlan</option><option value="chris derubeis">Chris DeRubeis</option><option value="inam">Inam</option><option value="james coleman">James Coleman</option><option value="kasia wilson">Kasia Wilson</option><option value="kat tatz">Kat Tatz</option><option value="michael godard">Michael Godard</option><option value="pablo picasso">Pablo Picasso</option><option value="patrick guyton">Patrick Guyton</option><option value="peter max">Peter Max</option><option value="simon bull">Simon Bull</option><option value="slava ilyayev">Slava Ilyayev</option><option value="yuval wolfson">Yuval Wolfson</option></select>
+                <select id="mediumFilter"><option value="">All Types</option><option value="acrylic painting">Acrylic Painting</option><option value="mixed media painting">Mixed Media Painting</option><option value="mixed media on metal">Mixed Media on Metal</option><option value="mixed media on paper">Mixed Media on Paper</option><option value="oil painting">Oil Painting</option><option value="original oil painting">Original Oil Painting</option><option value="original oil with sawdust">Original Oil with Sawdust</option><option value="original painting">Original Painting</option><option value="painting on metal">Painting on Metal</option><option value="unique mixed media">Unique Mixed Media</option><option value="unique mixed media on metal">Unique Mixed Media on Metal</option><option value="unique mixed media on paper">Unique Mixed Media on Paper</option><option value="white earthenware clay plate with oxidized paraffin decoration in white enamel and black">White earthenware clay plate with oxidized paraffin decoration in white enamel and black</option></select>
+                <select id="priceFilter">
+                    <option value="">All Prices</option>
+                    <option value="under1000">Under $1,000</option>
+                    <option value="1000to2499">$1,000–$2,499</option>
+                    <option value="2500to4999">$2,500–$4,999</option>
+                    <option value="5000plus">$5,000+</option>
+                    <option value="unknown">Price on Request / Unknown</option>
+                </select>
+                <select id="sortFilter">
+                    <option value="newest">Sort: Newest</option>
+                    <option value="oldest">Sort: Oldest</option>
+                    <option value="priceDesc">Price: High to Low</option>
+                    <option value="priceAsc">Price: Low to High</option>
+                    <option value="artistAsc">Artist: A to Z</option>
+                    <option value="artistDesc">Artist: Z to A</option>
+                </select>
+            </div>
+
+            <div class="result-row">
+                <div class="result-count" id="resultCount"></div>
+            </div>
+
+            <div class="grid" id="catalogGrid">
+                
+    <article class="card"
+        data-artist="chris derubeis"
+        data-seller="guy scuderi"
+        data-medium="unique mixed media on metal"
+        data-status="available"
+        data-price="995.0"
+        data-price-band="under1000"
+        data-shipping="true"
+        data-coa="true"
+        data-newest="1776773534.0"
+        data-search="chris derubeis mini elements (earth, wind, fire, water) unique mixed media on metal guy scuderi available entire set of 4 artworks for $995 shipped!">
+        <div class="card-image-wrap">
+            <img src="images/art_000001_mini-elements-earth-wind-fire-water.jpeg" class="art-img" alt="Mini Elements (Earth, Wind, Fire, Water)">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Chris DeRubeis</h2>
+                    <div class="artwork-title">Mini Elements (Earth, Wind, Fire, Water)</div>
+                </div>
+                <div class="price">$995</div>
+            </div>
+
+            <div class="badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Unique Mixed Media on Metal</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">11&quot; x 12&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23&quot; x 24&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Guy Scuderi</span></div>
+            <p class="notes">Entire set of 4 artworks for $995 shipped!</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="pablo picasso"
+        data-seller="dan cayer"
+        data-medium="white earthenware clay plate with oxidized paraffin decoration in white enamel and black"
+        data-status="available"
+        data-price="12000.0"
+        data-price-band="5000plus"
+        data-shipping=""
+        data-coa=""
+        data-newest="1776774314.0"
+        data-search="pablo picasso picador white earthenware clay plate with oxidized paraffin decoration in white enamel and black dan cayer available 1952. white earthenware clay plate inscribed &quot;edition picasso&quot; and stamped &quot;madoura plein feu&quot; and &quot;edition picasso&quot; on the verso. from an edition of 500 examples.">
+        <div class="card-image-wrap">
+            <img src="images/art_000002_picador.jpg" class="art-img" alt="Picador">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Pablo Picasso</h2>
+                    <div class="artwork-title">Picador</div>
+                </div>
+                <div class="price">$12,000</div>
+            </div>
+
+            <div class="badges"><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">White earthenware clay plate with oxidized paraffin decoration in white enamel and black</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">7 7/8&quot; x 7 7/8&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Dan Cayer</span></div>
+            <p class="notes">1952. White earthenware clay plate inscribed &quot;Edition Picasso&quot; and stamped &quot;Madoura Plein Feu&quot; and &quot;Edition Picasso&quot; on the verso. From an edition of 500 examples.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="patrick guyton"
+        data-seller="elmo zoe rufio"
+        data-medium="painting on metal"
+        data-status="available"
+        data-price="4000.0"
+        data-price-band="2500to4999"
+        data-shipping="true"
+        data-coa=""
+        data-newest="1776774407.0"
+        data-search="patrick guyton treasure painting on metal elmo zoe rufio available beautiful original guyton!">
+        <div class="card-image-wrap">
+            <img src="images/art_000003_treasure.jpg" class="art-img" alt="Treasure">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Patrick Guyton</h2>
+                    <div class="artwork-title">Treasure</div>
+                </div>
+                <div class="price">$4,000</div>
+            </div>
+
+            <div class="badges"><span class="badge">Shipping Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Painting on Metal</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">12&quot; x 36&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">19&quot; x 43.5&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Elmo Zoe Rufio</span></div>
+            <p class="notes">Beautiful original Guyton!</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="simon bull"
+        data-seller="macgregor brown"
+        data-medium="acrylic painting"
+        data-status="available"
+        data-price="3300.0"
+        data-price-band="2500to4999"
+        data-shipping="true"
+        data-coa=""
+        data-newest="1776774473.0"
+        data-search="simon bull living the life xii acrylic painting macgregor brown available purchased from genesis gallery in hawaii; framed and in perfect condition. artist signature in paint front bottom right corner. original price $25,000. ships with insurance. all offers considered.">
+        <div class="card-image-wrap">
+            <img src="images/art_000004_living-the-life-xii.jpg" class="art-img" alt="Living the Life XII">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Simon Bull</h2>
+                    <div class="artwork-title">Living the Life XII</div>
+                </div>
+                <div class="price">$3,300</div>
+            </div>
+
+            <div class="badges"><span class="badge">Shipping Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic Painting</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">30&quot; x 40&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">35&quot; x 45&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">MacGregor Brown</span></div>
+            <p class="notes">Purchased from Genesis Gallery in Hawaii; framed and in perfect condition. Artist signature in paint front bottom right corner. Original price $25,000. Ships with insurance. All offers considered.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="chris derubeis"
+        data-seller="amy goldstein friedman"
+        data-medium="mixed media on metal"
+        data-status="available"
+        data-price="4900.0"
+        data-price-band="2500to4999"
+        data-shipping="true"
+        data-coa="true"
+        data-newest="1776774858.0"
+        data-search="chris derubeis daphne the dolphin mixed media on metal amy goldstein friedman available beautiful derubeis painting at an amazing price! produced on hand ground aluminum and hand painted using urethane, acrylic, and a chemical cocktail proprietary to the artist.">
+        <div class="card-image-wrap">
+            <img src="images/art_000005_daphne-the-dolphin.jpg" class="art-img" alt="Daphne The Dolphin">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Chris DeRubeis</h2>
+                    <div class="artwork-title">Daphne The Dolphin</div>
+                </div>
+                <div class="price">$4,900</div>
+            </div>
+
+            <div class="badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed Media on Metal</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">20&quot; x 24&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Amy Goldstein Friedman</span></div>
+            <p class="notes">Beautiful DeRubeis painting at an amazing price! Produced on hand ground aluminum and hand painted using urethane, acrylic, and a chemical cocktail proprietary to the artist.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="anatoly metlan"
+        data-seller="bill harp"
+        data-medium="oil painting"
+        data-status="available"
+        data-price="3900.0"
+        data-price-band="2500to4999"
+        data-shipping=""
+        data-coa="true"
+        data-newest="1776774984.0"
+        data-search="anatoly metlan covering the ring oil painting bill harp available gorgeous oiriginal oil painting! shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000006_covering-the-ring.jpg" class="art-img" alt="Covering the Ring">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Anatoly Metlan</h2>
+                    <div class="artwork-title">Covering the Ring</div>
+                </div>
+                <div class="price">$3,900</div>
+            </div>
+
+            <div class="badges"><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Oil Painting</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">39&quot; x 27&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">45&quot; x 33.25&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">Gorgeous oiriginal oil painting! Shipping not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="inam"
+        data-seller="bill harp"
+        data-medium="original oil with sawdust"
+        data-status="available"
+        data-price="3700.0"
+        data-price-band="2500to4999"
+        data-shipping=""
+        data-coa=""
+        data-newest="1776775086.0"
+        data-search="inam untitled original oil with sawdust bill harp available gorgeous original inam painting! huge size. shipping is not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000007_untitled.jpg" class="art-img" alt="Untitled">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Inam</h2>
+                    <div class="artwork-title">Untitled</div>
+                </div>
+                <div class="price">$3,700</div>
+            </div>
+
+            <div class="badges"><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Original Oil with Sawdust</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">35.75&quot; x 53.5&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">Gorgeous original Inam painting! HUGE size. Shipping is not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="slava ilyayev"
+        data-seller="bill harp"
+        data-medium="oil painting"
+        data-status="available"
+        data-price="2800.0"
+        data-price-band="2500to4999"
+        data-shipping=""
+        data-coa="true"
+        data-newest="1776775236.0"
+        data-search="slava ilyayev untitled oil painting bill harp available stunning original slava!! shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000008_untitled.jpg" class="art-img" alt="Untitled">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Slava Ilyayev</h2>
+                    <div class="artwork-title">Untitled</div>
+                </div>
+                <div class="price">$2,800</div>
+            </div>
+
+            <div class="badges"><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Oil Painting</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">32.5&quot; x 19.5&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">Stunning original Slava!! Shipping not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="peter max"
+        data-seller="bill harp"
+        data-medium="mixed media on paper"
+        data-status="available"
+        data-price="2900.0"
+        data-price-band="2500to4999"
+        data-shipping=""
+        data-coa="true"
+        data-newest="1776775413.0"
+        data-search="peter max liberty with earth and flag mixed media on paper bill harp available 2006 unique variation mixed media acrylic painting on color lithography paper. shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000009_liberty-with-earth-and-flag.jpg" class="art-img" alt="Liberty with Earth and Flag">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Peter Max</h2>
+                    <div class="artwork-title">Liberty with Earth and Flag</div>
+                </div>
+                <div class="price">$2,900</div>
+            </div>
+
+            <div class="badges"><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed Media on Paper</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">19&quot; x 15&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">32.5&quot; x 28.5&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">2006 Unique Variation Mixed media acrylic painting on color lithography paper. Shipping not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="peter max"
+        data-seller="bill harp"
+        data-medium="unique mixed media"
+        data-status="available"
+        data-price="2900.0"
+        data-price-band="2500to4999"
+        data-shipping=""
+        data-coa="true"
+        data-newest="1776775525.0"
+        data-search="peter max full liberty with flag unique mixed media bill harp available 2006 unique variation mixed media acrylic painting on color lithograph paper. shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000010_full-liberty-with-flag.jpg" class="art-img" alt="Full Liberty with Flag">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Peter Max</h2>
+                    <div class="artwork-title">Full Liberty with Flag</div>
+                </div>
+                <div class="price">$2,900</div>
+            </div>
+
+            <div class="badges"><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Unique Mixed Media</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">19&quot; x 15&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">32.5&quot; x 28.5&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">2006 Unique Variation mixed media acrylic painting on color lithograph paper. Shipping not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="peter max"
+        data-seller="bill harp"
+        data-medium="unique mixed media on paper"
+        data-status="available"
+        data-price="2006.0"
+        data-price-band="1000to2499"
+        data-shipping=""
+        data-coa="true"
+        data-newest="1776775640.0"
+        data-search="peter max 4 liberties, 4 heads, and 4 hearts unique mixed media on paper bill harp available 2006 unique variation mixed media on color lithography paper. shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000011_4-liberties-4-heads-and-4-hearts.jpg" class="art-img" alt="4 Liberties, 4 Heads, and 4 Hearts">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Peter Max</h2>
+                    <div class="artwork-title">4 Liberties, 4 Heads, and 4 Hearts</div>
+                </div>
+                <div class="price">$2,006</div>
+            </div>
+
+            <div class="badges"><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Unique Mixed Media on Paper</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">14.5&quot; x 18&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">28.5&quot; x 38.5&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">2006 Unique Variation Mixed Media on color lithography paper. Shipping not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="michael godard"
+        data-seller="bill harp"
+        data-medium="unique mixed media on paper"
+        data-status="available"
+        data-price="2900.0"
+        data-price-band="2500to4999"
+        data-shipping=""
+        data-coa="true"
+        data-newest="1776775775.0"
+        data-search="michael godard wings of hope unique mixed media on paper bill harp available beautiful unique mixed media artwork! shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000012_wings-of-hope.jpg" class="art-img" alt="Wings of Hope">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Michael Godard</h2>
+                    <div class="artwork-title">Wings of Hope</div>
+                </div>
+                <div class="price">$2,900</div>
+            </div>
+
+            <div class="badges"><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Unique Mixed Media on Paper</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">26.5&quot; x 33.5&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">Beautiful unique mixed media artwork! Shipping not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="james coleman"
+        data-seller="bill harp"
+        data-medium="mixed media painting"
+        data-status="available"
+        data-price="1740.0"
+        data-price-band="1000to2499"
+        data-shipping=""
+        data-coa="true"
+        data-newest="1776776112.0"
+        data-search="james coleman field of poppies mixed media painting bill harp available unique mixed media painting on canvas with coppier, silver, and gold leafing. shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000013_field-of-poppies.jpg" class="art-img" alt="Field of Poppies">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">James Coleman</h2>
+                    <div class="artwork-title">Field of Poppies</div>
+                </div>
+                <div class="price">$1,740</div>
+            </div>
+
+            <div class="badges"><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed Media Painting</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">20&quot; x 22&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">28&quot; x 30&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">Unique mixed media painting on canvas with coppier, silver, and gold leafing. Shipping not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="kat tatz"
+        data-seller="bill harp"
+        data-medium="mixed media painting"
+        data-status="available"
+        data-price="400.0"
+        data-price-band="under1000"
+        data-shipping=""
+        data-coa="true"
+        data-newest="1776776229.0"
+        data-search="kat tatz steam mixed media painting bill harp available unique mixed media painting on canvas. beautifully framed. shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000014_steam.jpg" class="art-img" alt="Steam">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Kat Tatz</h2>
+                    <div class="artwork-title">Steam</div>
+                </div>
+                <div class="price">$400</div>
+            </div>
+
+            <div class="badges"><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed Media Painting</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">7 3/8&quot; x 3 1/2&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">21.5&quot; x 17.75&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">Unique mixed media painting on canvas. Beautifully framed. Shipping not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="yuval wolfson"
+        data-seller="bill harp"
+        data-medium="original painting"
+        data-status="available"
+        data-price="1500.0"
+        data-price-band="1000to2499"
+        data-shipping=""
+        data-coa="true"
+        data-newest="1776776341.0"
+        data-search="yuval wolfson mountainous original painting bill harp available beautiful original painting! shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000015_mountainous.jpg" class="art-img" alt="Mountainous">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Yuval Wolfson</h2>
+                    <div class="artwork-title">Mountainous</div>
+                </div>
+                <div class="price">$1,500</div>
+            </div>
+
+            <div class="badges"><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Original Painting</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">24&quot; x 12&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">31 5/8&quot; x 18 1/2&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">Beautiful original painting! Shipping not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="patrick guyton"
+        data-seller="bill harp"
+        data-medium="mixed media on metal"
+        data-status="available"
+        data-price="700.0"
+        data-price-band="under1000"
+        data-shipping=""
+        data-coa="true"
+        data-newest="1776776414.0"
+        data-search="patrick guyton arbre - petite (gold) mixed media on metal bill harp available mixed media painting on aluminum. shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000016_arbre-petite-gold.jpg" class="art-img" alt="Arbre - Petite (Gold)">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Patrick Guyton</h2>
+                    <div class="artwork-title">Arbre - Petite (Gold)</div>
+                </div>
+                <div class="price">$700</div>
+            </div>
+
+            <div class="badges"><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed Media on Metal</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">10&quot; x 8&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">18&quot; x 16&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">Mixed media painting on aluminum. Shipping not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="kasia wilson"
+        data-seller="bill harp"
+        data-medium="original oil painting"
+        data-status="available"
+        data-price="3200.0"
+        data-price-band="2500to4999"
+        data-shipping=""
+        data-coa="true"
+        data-newest="1776776475.0"
+        data-search="kasia wilson shifting veil original oil painting bill harp available gorgeous original oil painting! shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000017_shifting-veil.jpg" class="art-img" alt="Shifting Veil">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Kasia Wilson</h2>
+                    <div class="artwork-title">Shifting Veil</div>
+                </div>
+                <div class="price">$3,200</div>
+            </div>
+
+            <div class="badges"><span class="badge">COA Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Original Oil Painting</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">39.37&quot; x 39.37&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">Gorgeous original oil painting! Shipping not included.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="alfred gockel"
+        data-seller="bill harp"
+        data-medium="unique mixed media"
+        data-status="available"
+        data-price="400.0"
+        data-price-band="under1000"
+        data-shipping=""
+        data-coa=""
+        data-newest="1776776584.0"
+        data-search="alfred gockel two by two unique mixed media bill harp available no paperwork. shipping not included.">
+        <div class="card-image-wrap">
+            <img src="images/art_000018_two-by-two.jpg" class="art-img" alt="Two By Two">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Alfred Gockel</h2>
+                    <div class="artwork-title">Two By Two</div>
+                </div>
+                <div class="price">$400</div>
+            </div>
+
+            <div class="badges"><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Unique Mixed Media</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">7.75&quot; x 19.75&quot;</span></div>
+            </div>
+
+            <div class="seller"><span class="seller-label">Seller</span><span class="seller-name">Bill Harp</span></div>
+            <p class="notes">No paperwork. Shipping not included.</p>
+        </div>
+    </article>
+    
+            </div>
+        </section>
+    </div>
+
+    <button id="backToTop" aria-label="Back to top">↑</button>
+
+    <script>
+        const searchInput = document.getElementById("searchInput");
+        const sellerFilter = document.getElementById("sellerFilter");
+        const artistFilter = document.getElementById("artistFilter");
+        const mediumFilter = document.getElementById("mediumFilter");
+        const priceFilter = document.getElementById("priceFilter");
+        const sortFilter = document.getElementById("sortFilter");
+        const grid = document.getElementById("catalogGrid");
+        const cards = Array.from(document.querySelectorAll("#catalogGrid .card"));
+        const resultCount = document.getElementById("resultCount");
+        const backToTop = document.getElementById("backToTop");
+
+        function matchesPriceBand(priceBand, filterBand) {
+            if (!filterBand) return true;
+            return priceBand === filterBand;
+        }
+
+        function sortCards(visibleCards) {
+            const mode = sortFilter.value;
+
+            visibleCards.sort((a, b) => {
+                const priceA = Number(a.dataset.price || -1);
+                const priceB = Number(b.dataset.price || -1);
+                const newestA = Number(a.dataset.newest || 0);
+                const newestB = Number(b.dataset.newest || 0);
+                const artistA = (a.dataset.artist || "").toLowerCase();
+                const artistB = (b.dataset.artist || "").toLowerCase();
+
+                if (mode === "newest") return newestB - newestA;
+                if (mode === "oldest") return newestA - newestB;
+
+                if (mode === "priceDesc") {
+                    const safeA = priceA === -1 ? -Infinity : priceA;
+                    const safeB = priceB === -1 ? -Infinity : priceB;
+                    return safeB - safeA;
+                }
+
+                if (mode === "priceAsc") {
+                    const safeA = priceA === -1 ? Infinity : priceA;
+                    const safeB = priceB === -1 ? Infinity : priceB;
+                    return safeA - safeB;
+                }
+
+                if (mode === "artistAsc") return artistA.localeCompare(artistB);
+                if (mode === "artistDesc") return artistB.localeCompare(artistA);
+
+                return 0;
+            });
+
+            visibleCards.forEach(card => grid.appendChild(card));
+        }
+
+        function applyFilters() {
+            const search = searchInput.value.trim().toLowerCase();
+            const seller = sellerFilter.value;
+            const artist = artistFilter.value;
+            const medium = mediumFilter.value;
+            const priceBand = priceFilter.value;
+
+            let visibleCards = [];
+
+            cards.forEach(card => {
+                const sellerValue = card.dataset.seller || "";
+                const artistValue = card.dataset.artist || "";
+                const mediumValue = card.dataset.medium || "";
+                const cardPriceBand = card.dataset.priceBand || "";
+                const fullText = card.dataset.search || "";
+
+                const matchesSearch = !search || fullText.includes(search);
+                const matchesSeller = !seller || sellerValue === seller;
+                const matchesArtist = !artist || artistValue === artist;
+                const matchesMedium = !medium || mediumValue === medium;
+                const matchesPrice = matchesPriceBand(cardPriceBand, priceBand);
+
+                const visible = matchesSearch && matchesSeller && matchesArtist && matchesMedium && matchesPrice;
+                card.classList.toggle("hidden", !visible);
+
+                if (visible) {
+                    visibleCards.push(card);
+                }
+            });
+
+            sortCards(visibleCards);
+            resultCount.textContent = `${visibleCards.length} listing${visibleCards.length === 1 ? "" : "s"} shown`;
+        }
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 400) {
+                backToTop.style.display = "flex";
+            } else {
+                backToTop.style.display = "none";
+            }
+        });
+
+        backToTop.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+        [searchInput, sellerFilter, artistFilter, mediumFilter, priceFilter, sortFilter].forEach(el => {
+            el.addEventListener("input", applyFilters);
+            el.addEventListener("change", applyFilters);
+        });
+
+        applyFilters();
+    </script>
+</body>
+</html>
