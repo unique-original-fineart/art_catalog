@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Catalog</title>
+    <style>
+        :root {
+            --bg: #f5f1ea;
+            --bg-2: #efe8dc;
+            --card: rgba(255,255,255,0.82);
+            --text: #1f1a17;
+            --muted: #6f675e;
+            --line: #dbd1c4;
+            --gold: #b08b57;
+            --shadow: 0 18px 40px rgba(35, 27, 20, 0.08);
+            --shadow-soft: 0 8px 22px rgba(35, 27, 20, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(255,255,255,0.7), transparent 35%),
+                linear-gradient(180deg, #f7f3ed 0%, #f2ece3 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.45;
+        }
+
+        .page {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 40px 28px 90px;
+        }
+
+        .hero {
+            padding: 24px 0 36px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .eyebrow {
+            font-size: 12px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            margin: 0;
+            max-width: 980px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(40px, 6vw, 74px);
+            line-height: 0.98;
+            letter-spacing: -0.04em;
+            font-weight: 600;
+        }
+
+        .hero-sub {
+            max-width: 780px;
+            margin-top: 18px;
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 34px;
+        }
+
+        .stat {
+            background: var(--card);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(219, 209, 196, 0.8);
+            border-radius: 22px;
+            padding: 20px 22px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 34px;
+            line-height: 1;
+        }
+
+        .section {
+            margin-top: 54px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .section h3 {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 30px;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }
+
+        .section-note {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 2fr repeat(4, 1fr);
+            gap: 12px;
+            margin: 0 0 20px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.92);
+            color: var(--text);
+            font-size: 14px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .result-count {
+            margin-bottom: 18px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+        }
+
+        .card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(219, 209, 196, 0.85);
+            border-radius: 26px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 24px 48px rgba(35, 27, 20, 0.12);
+        }
+
+        .card.hidden {
+            display: none;
+        }
+
+        .card-image-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.6), rgba(239,232,220,0.9));
+            border-bottom: 1px solid var(--line);
+            padding: 22px;
+            min-height: 340px;
+        }
+
+        .art-img {
+            max-width: 100%;
+            max-height: 380px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            background: #f3efe8;
+            border-radius: 8px;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+        }
+
+        .card-body {
+            padding: 22px 22px 24px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: start;
+        }
+
+        .artist-name {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 30px;
+            line-height: 0.98;
+            letter-spacing: -0.035em;
+            font-weight: 600;
+        }
+
+        .artwork-title {
+            margin-top: 10px;
+            font-size: 16px;
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        .price {
+            white-space: nowrap;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .badge,
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 7px 11px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.92);
+        }
+
+        .badge-muted {
+            color: var(--muted);
+        }
+
+        .status-available {
+            background: #edf6ee;
+        }
+
+        .status-pending {
+            background: #fbf3df;
+        }
+
+        .status-sold {
+            background: #f6e5e5;
+        }
+
+        .specs {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 7px 0;
+        }
+
+        .spec-label {
+            color: var(--muted);
+            font-size: 13px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .spec-value {
+            text-align: right;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .seller {
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .notes {
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        @media (max-width: 980px) {
+            .filters {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .page {
+                padding: 28px 16px 70px;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+            }
+
+            .price {
+                white-space: normal;
+            }
+
+            .card-image-wrap {
+                min-height: 280px;
+                padding: 18px;
+            }
+
+            .art-img {
+                max-height: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="hero">
+            <div class="eyebrow">Member Listings</div>
+            <h1>April Art Listings</h1>
+            <div class="hero-sub">
+                A curated, visual overview of artworks currently available from group members.
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-label">Available Listings</div>
+                    <div class="stat-value">3</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Artists</div>
+                    <div class="stat-value">3</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Sellers</div>
+                    <div class="stat-value">3</div>
+                </div>
+            </div>
+        </header>
+
+        <section class="section">
+            <div class="section-heading">
+                <h3>Featured Works</h3>
+                <div class="section-note">Selected highlights from current member offerings</div>
+            </div>
+            <div class="grid">
+                
+    <article class="card"
+        data-artist="pablo picasso"
+        data-medium="white earthenware clay plate with oxidized paraffin decoration in white enamel and black"
+        data-status="available"
+        data-price="12000.0"
+        data-shipping="true"
+        data-coa="">
+        <div class="card-image-wrap">
+            <img src="images/IMG_1.jpg" class="art-img" alt="Picador">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Pablo Picasso</h2>
+                    <div class="artwork-title">Picador</div>
+                </div>
+                <div class="price">$12,000</div>
+            </div>
+
+            <div class="badges"><span class="badge">Shipping Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">White earthenware clay plate with oxidized paraffin decoration in white enamel and black</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">7 7/8&quot; × 7 7/8&quot;</span></div>
+            </div>
+
+            <div class="seller">Seller: Dan Cayer</div>
+            <p class="notes">1952. White earthenware clay plate inscribed &quot;Edition Picasso&quot; and stamped &quot;Madoura Plein Feu&quot; and &quot;Edition Picasso&quot; on the verso. From an edition of 500 examples.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="patrick guyton"
+        data-medium="painting on metal"
+        data-status="available"
+        data-price="4000.0"
+        data-shipping="true"
+        data-coa="">
+        <div class="card-image-wrap">
+            <img src="images/IMG_3.jpg" class="art-img" alt="Treasure">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Patrick Guyton</h2>
+                    <div class="artwork-title">Treasure</div>
+                </div>
+                <div class="price">$4,000</div>
+            </div>
+
+            <div class="badges"><span class="badge">Shipping Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Painting on metal</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">12 x 36</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">19 x 43.5</span></div>
+            </div>
+
+            <div class="seller">Seller: Elmo Zoe Rufio</div>
+            <p class="notes">Painting on metal. Unframed: 12 x 36. Framed: 19 x 43.5. Listed for $4000 shipped.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="simon bull"
+        data-medium="acrylic on canvas"
+        data-status="available"
+        data-price="3300.0"
+        data-shipping="true"
+        data-coa="">
+        <div class="card-image-wrap">
+            <img src="images/IMG_2.jpg" class="art-img" alt="Living the Life XII">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Simon Bull</h2>
+                    <div class="artwork-title">Living the Life XII</div>
+                </div>
+                <div class="price">$3,300</div>
+            </div>
+
+            <div class="badges"><span class="badge">Shipping Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic on Canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">30&quot; x 40&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">35&quot; x 45&quot;</span></div>
+            </div>
+
+            <div class="seller">Seller: MacGregor Brown</div>
+            <p class="notes">Purchased from Genesis Gallery in Hawaii; framed and in perfect condition. Artist signature in paint front bottom right corner. Original price $25,000. Ships with insurance. All offers considered.</p>
+        </div>
+    </article>
+    
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <h3>Full Catalog</h3>
+                <div class="section-note">Browse by artist, medium, status, and price</div>
+            </div>
+
+            <div class="filters">
+                <input type="text" id="searchInput" placeholder="Search artist, title, seller...">
+                <select id="artistFilter"><option value="">All Artists</option><option value="pablo picasso">Pablo Picasso</option><option value="patrick guyton">Patrick Guyton</option><option value="simon bull">Simon Bull</option></select>
+                <select id="mediumFilter"><option value="">All Types</option><option value="acrylic on canvas">Acrylic on Canvas</option><option value="painting on metal">Painting on metal</option><option value="white earthenware clay plate with oxidized paraffin decoration in white enamel and black">White earthenware clay plate with oxidized paraffin decoration in white enamel and black</option></select>
+                <select id="statusFilter">
+                    <option value="">All Statuses</option>
+                    <option value="available">Available</option>
+                    <option value="pending">Pending</option>
+                    <option value="sold">Sold</option>
+                    <option value="unknown">Unknown</option>
+                </select>
+                <select id="priceFilter">
+                    <option value="">All Prices</option>
+                    <option value="under1000">Under $1,000</option>
+                    <option value="1000to2499">$1,000–$2,499</option>
+                    <option value="2500to4999">$2,500–$4,999</option>
+                    <option value="5000plus">$5,000+</option>
+                </select>
+            </div>
+
+            <div class="result-count" id="resultCount"></div>
+
+            <div class="grid" id="catalogGrid">
+                
+    <article class="card"
+        data-artist="simon bull"
+        data-medium="acrylic on canvas"
+        data-status="available"
+        data-price="3300.0"
+        data-shipping="true"
+        data-coa="">
+        <div class="card-image-wrap">
+            <img src="images/IMG_2.jpg" class="art-img" alt="Living the Life XII">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Simon Bull</h2>
+                    <div class="artwork-title">Living the Life XII</div>
+                </div>
+                <div class="price">$3,300</div>
+            </div>
+
+            <div class="badges"><span class="badge">Shipping Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic on Canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">30&quot; x 40&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">35&quot; x 45&quot;</span></div>
+            </div>
+
+            <div class="seller">Seller: MacGregor Brown</div>
+            <p class="notes">Purchased from Genesis Gallery in Hawaii; framed and in perfect condition. Artist signature in paint front bottom right corner. Original price $25,000. Ships with insurance. All offers considered.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="pablo picasso"
+        data-medium="white earthenware clay plate with oxidized paraffin decoration in white enamel and black"
+        data-status="available"
+        data-price="12000.0"
+        data-shipping="true"
+        data-coa="">
+        <div class="card-image-wrap">
+            <img src="images/IMG_1.jpg" class="art-img" alt="Picador">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Pablo Picasso</h2>
+                    <div class="artwork-title">Picador</div>
+                </div>
+                <div class="price">$12,000</div>
+            </div>
+
+            <div class="badges"><span class="badge">Shipping Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">White earthenware clay plate with oxidized paraffin decoration in white enamel and black</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">7 7/8&quot; × 7 7/8&quot;</span></div>
+            </div>
+
+            <div class="seller">Seller: Dan Cayer</div>
+            <p class="notes">1952. White earthenware clay plate inscribed &quot;Edition Picasso&quot; and stamped &quot;Madoura Plein Feu&quot; and &quot;Edition Picasso&quot; on the verso. From an edition of 500 examples.</p>
+        </div>
+    </article>
+    
+
+    <article class="card"
+        data-artist="patrick guyton"
+        data-medium="painting on metal"
+        data-status="available"
+        data-price="4000.0"
+        data-shipping="true"
+        data-coa="">
+        <div class="card-image-wrap">
+            <img src="images/IMG_3.jpg" class="art-img" alt="Treasure">
+        </div>
+        <div class="card-body">
+            <div class="card-header">
+                <div>
+                    <h2 class="artist-name">Patrick Guyton</h2>
+                    <div class="artwork-title">Treasure</div>
+                </div>
+                <div class="price">$4,000</div>
+            </div>
+
+            <div class="badges"><span class="badge">Shipping Included</span><span class="status-pill status-available">Available</span></div>
+
+            <div class="specs">
+                <div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Painting on metal</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">12 x 36</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">19 x 43.5</span></div>
+            </div>
+
+            <div class="seller">Seller: Elmo Zoe Rufio</div>
+            <p class="notes">Painting on metal. Unframed: 12 x 36. Framed: 19 x 43.5. Listed for $4000 shipped.</p>
+        </div>
+    </article>
+    
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById("searchInput");
+        const artistFilter = document.getElementById("artistFilter");
+        const mediumFilter = document.getElementById("mediumFilter");
+        const statusFilter = document.getElementById("statusFilter");
+        const priceFilter = document.getElementById("priceFilter");
+        const cards = Array.from(document.querySelectorAll("#catalogGrid .card"));
+        const resultCount = document.getElementById("resultCount");
+
+        function matchesPriceBand(price, band) {
+            if (price === -1) return band === "";
+            if (!band) return true;
+            if (band === "under1000") return price < 1000;
+            if (band === "1000to2499") return price >= 1000 && price <= 2499;
+            if (band === "2500to4999") return price >= 2500 && price <= 4999;
+            if (band === "5000plus") return price >= 5000;
+            return true;
+        }
+
+        function applyFilters() {
+            const search = searchInput.value.trim().toLowerCase();
+            const artist = artistFilter.value;
+            const medium = mediumFilter.value;
+            const status = statusFilter.value;
+            const priceBand = priceFilter.value;
+
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const artistValue = card.dataset.artist || "";
+                const mediumValue = card.dataset.medium || "";
+                const statusValue = card.dataset.status || "";
+                const priceValue = Number(card.dataset.price || -1);
+                const fullText = card.innerText.toLowerCase();
+
+                const matchesSearch = !search || fullText.includes(search);
+                const matchesArtist = !artist || artistValue === artist;
+                const matchesMedium = !medium || mediumValue === medium;
+                const matchesStatus = !status || statusValue === status;
+                const matchesPrice = matchesPriceBand(priceValue, priceBand);
+
+                const visible = matchesSearch && matchesArtist && matchesMedium && matchesStatus && matchesPrice;
+                card.classList.toggle("hidden", !visible);
+
+                if (visible) visibleCount++;
+            });
+
+            resultCount.textContent = `${visibleCount} listing${visibleCount === 1 ? "" : "s"} shown`;
+        }
+
+        [searchInput, artistFilter, mediumFilter, statusFilter, priceFilter].forEach(el => {
+            el.addEventListener("input", applyFilters);
+            el.addEventListener("change", applyFilters);
+        });
+
+        applyFilters();
+    </script>
+</body>
+</html>
