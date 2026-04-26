@@ -5,6 +5,9 @@ on:
     - cron: "*/30 * * * *"  # runs every 30 minutes
   workflow_dispatch:       # allows manual trigger
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,6 +25,7 @@ jobs:
         run: |
           python generate_catalog.py \
             --sheet-id 11Z2k_ifdiv-De1Yp_ioMF63C_WF_Tx3Dv3GTBlswfYs \
+            --gid 0 \
             --output index.html \
             --title "Canvas Circle | Fine Art Marketplace"
 
