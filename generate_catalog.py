@@ -459,26 +459,10 @@ def get_price_band(price):
 
 
 def build_card(row, image_src):
-    image_html = ""
-    if image_src:
-        alt_text = safe_text(row.get("artwork_title") or row.get("artist_name") or "Artwork")
-        image_html = f"""
-        <button class="image-open" type="button" data-fullsrc="{image_src}" data-alt="{alt_text}" aria-label="Open artwork image">
-            <img 
-                src="{image_src}" 
-                data-fullsrc="{drive_thumbnail_url(row.get('source_image_url'), 'w1200')}" 
-                class="art-img" 
-                alt="{alt_text}" 
-                loading="lazy" 
-                decoding="async"
-            >
-        </button>
-        """
-
     artist_name_raw = row.get("artist_name") or "Unknown Artist"
     artwork_title_raw = row.get("artwork_title") or "Untitled"
     medium_raw = row.get("medium") or ""
-    artwork_category_raw = row.get("artwork_category") or ""
+    artwork_category_raw = (row.get("artwork_category") or "").strip()
     seller_name_raw = row.get("seller_name") or ""
     status_raw = row.get("status") or ""
     listing_id_raw = row.get("listing_id") or ""
@@ -488,37 +472,118 @@ def build_card(row, image_src):
     seller_name = safe_text(seller_name_raw)
 
     price_raw = row.get("price")
-    price_html = build_price_html(row)
     price_numeric = parse_price(price_raw)
     price_for_filter = price_numeric if price_numeric is not None else -1
+    base_price_html = build_price_html(row)
 
     shipping = parse_bool(row.get("shipping_included"))
     coa = parse_bool(row.get("certificate_of_authenticity_included"))
 
-    badges = build_badges(row)
-    specs = build_specs(row)
-    notes = build_notes(row)
+    status_lower = status_raw.strip().lower()
+    is_sold = status_lower == "sold"
+    is_pending = status_lower == "pending"
 
     seller_profile_url = (row.get("seller_profile_url") or "").strip()
+    listing_id = html.escape(str(listing_id_raw))
 
-    contact_button = ""
-    if seller_profile_url:
-        safe_url = html.escape(seller_profile_url, quote=True)
-        contact_button = f'''
-        <a href="{safe_url}" target="_blank" rel="noopener noreferrer" class="contact-seller-button">
-            Contact Seller
-        </a>
-        '''
+    full_image_src = drive_thumbnail_url(row.get("source_image_url"), "w1200")
+    alt_text = safe_text(row.get("artwork_title") or row.get("artist_name") or "Artwork")
 
-    seller_html = (
-        f"""
-        <div class="seller">
-            <span class="seller-label">Seller</span>
-            <span class="seller-name">{seller_name}</span>
-            {contact_button}
-        </div>
+    # ---------- Card-only summary ----------
+
+    image_html = ""
+    if image_src:
+        image_html = f"""
+        <button class="image-open" type="button" data-fullsrc="{image_src}" data-alt="{alt_text}" aria-label="Open artwork image">
+            <img
+                src="{image_src}"
+                data-fullsrc="{full_image_src}"
+                class="art-img"
+                alt="{alt_text}"
+                loading="lazy"
+                decoding="async"
+            >
+        </button>
         """
-        if seller_name else ""
+
+    save_heart_html = (
+        f'<button class="save-listing-button corner-heart" type="button" '
+        f'data-listing-id="{listing_id}" aria-label="Save listing">♡</button>'
+    )
+
+    # Price with status treatment for the card
+    if is_sold:
+        card_price_html = (
+            f'<div class="price-with-status sold-treatment">{base_price_html}'
+            f'<span class="sold-mark">Sold</span></div>'
+        )
+    elif is_pending:
+        card_price_html = (
+            f'<div class="price-with-status pending-treatment">{base_price_html}'
+            f'<span class="pending-mark">Pending</span></div>'
+        )
+    else:
+        card_price_html = base_price_html
+
+    category_badge_html = ""
+    if artwork_category_raw:
+        category_badge_html = (
+            f'<span class="badge artwork-category-badge card-badge">'
+            f'{safe_text(artwork_category_raw)}</span>'
+        )
+
+    contact_button_html = ""
+    if seller_profile_url and not is_sold:
+        safe_url = html.escape(seller_profile_url, quote=True)
+        contact_button_html = (
+            f'<a href="{safe_url}" target="_blank" rel="noopener noreferrer" '
+            f'class="contact-seller-button">Contact Seller</a>'
+        )
+
+    show_more_button_html = (
+        f'<button class="show-more-button" type="button" data-listing-id="{listing_id}" '
+        f'aria-label="Show more details">Show More <span class="chevron">▾</span></button>'
+    )
+
+    # ---------- Modal-only content ----------
+
+    modal_status_pill = ""
+    if status_raw.strip():
+        status_class = "status-pill"
+        if is_sold:
+            status_class += " status-sold"
+        elif is_pending:
+            status_class += " status-pending"
+        elif status_lower == "available":
+            status_class += " status-available"
+        modal_status_pill = f'<span class="{status_class}">{safe_text(status_raw)}</span>'
+
+    modal_badge_parts = []
+    if shipping is True:
+        modal_badge_parts.append('<span class="badge">Shipping Included</span>')
+    elif shipping is False:
+        modal_badge_parts.append('<span class="badge badge-muted">Shipping Extra</span>')
+    if coa is True:
+        modal_badge_parts.append('<span class="badge">COA Included</span>')
+    modal_badges_html = "".join(modal_badge_parts)
+
+    modal_specs_html = build_specs(row)
+    modal_notes_html = build_notes(row)
+
+    modal_seller_html = ""
+    if seller_name_raw:
+        modal_seller_html = f"""
+            <div class="modal-seller">
+                <span class="seller-label">Seller</span>
+                <span class="seller-name">{seller_name}</span>
+                {contact_button_html}
+            </div>
+        """
+
+    modal_save_button_html = (
+        f'<button class="save-listing-button modal-save-button" type="button" '
+        f'data-listing-id="{listing_id}" aria-label="Save listing">'
+        f'♡ Save Listing</button>'
     )
 
     searchable_text = " ".join(
@@ -534,7 +599,6 @@ def build_card(row, image_src):
     ).lower()
 
     newest_value = newest_sort_value(row)
-    listing_id = html.escape(str(listing_id_raw))
 
     return f"""
     <article class="card"
@@ -551,34 +615,56 @@ def build_card(row, image_src):
         data-coa="{'' if coa is None else str(coa).lower()}"
         data-newest="{newest_value}"
         data-search="{html.escape(searchable_text)}">
+
         <div class="card-image-wrap">
             {image_html}
+            {save_heart_html}
         </div>
+
         <div class="card-body">
-            <div class="card-header">
-                <div>
-                    <h2 class="artist-name">{artist_name}</h2>
-                    <div class="artwork-title">{artwork_title}</div>
-                </div>
-                {price_html}
+            <h2 class="artist-name">{artist_name}</h2>
+            <div class="artwork-title">{artwork_title}</div>
+
+            <div class="card-price-row">
+                {card_price_html}
+                {category_badge_html}
             </div>
 
-            <div class="badges">{badges}</div>
-
-            <div class="specs">
-                {specs}
+            <div class="card-actions">
+                {contact_button_html}
+                {show_more_button_html}
             </div>
-
-            {seller_html}
-
-            <div class="listing-actions">
-                <button class="save-listing-button" type="button" data-listing-id="{listing_id}" aria-label="Save listing">
-                    ♡ Save Listing
-                </button>
-            </div>
-
-            {notes}
         </div>
+
+        <template class="modal-content-template">
+            <div class="modal-content-inner">
+                <div class="modal-image-wrap">
+                    <img src="{full_image_src}" class="modal-art-img" alt="{alt_text}">
+                </div>
+                <div class="modal-info">
+                    <div class="modal-header">
+                        <h2 class="artist-name">{artist_name}</h2>
+                        <div class="artwork-title">{artwork_title}</div>
+                        <div class="modal-price-row">
+                            {base_price_html}
+                            {modal_status_pill}
+                        </div>
+                    </div>
+
+                    <div class="modal-badges">{modal_badges_html}</div>
+
+                    <div class="modal-specs">{modal_specs_html}</div>
+
+                    {modal_seller_html}
+
+                    <div class="modal-actions">
+                        {modal_save_button_html}
+                    </div>
+
+                    {modal_notes_html}
+                </div>
+            </div>
+        </template>
     </article>
     """
 
@@ -1562,6 +1648,304 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             margin: 0;
         }}
 
+        /* === Card layout (new compact summary) === */
+        .card-image-wrap {{
+            position: relative;
+        }}
+
+        .save-listing-button.corner-heart {{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid rgba(219, 209, 196, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            line-height: 1;
+            color: #1f1a17;
+            cursor: pointer;
+            transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+            z-index: 5;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }}
+
+        .save-listing-button.corner-heart:hover {{
+            transform: scale(1.06);
+            background: white;
+        }}
+
+        .save-listing-button.corner-heart.is-saved {{
+            background: #1f1a17;
+            border-color: #1f1a17;
+            color: white;
+        }}
+
+        .card-body .artist-name {{
+            margin: 0;
+        }}
+
+        .card-price-row {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }}
+
+        .card-price-row .price {{
+            margin: 0;
+        }}
+
+        .card-badge {{
+            font-size: 11px;
+            padding: 4px 8px;
+        }}
+
+        .price-with-status {{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }}
+
+        .sold-treatment .price {{
+            color: var(--muted);
+            text-decoration: line-through;
+            text-decoration-thickness: 2px;
+        }}
+
+        .sold-mark {{
+            display: inline-flex;
+            align-items: center;
+            background: #c93f3f;
+            color: white;
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }}
+
+        .pending-mark {{
+            display: inline-flex;
+            align-items: center;
+            background: #fbf3df;
+            color: #7a4d00;
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }}
+
+        .card-actions {{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 14px;
+        }}
+
+        .card-actions .contact-seller-button {{
+            width: 100%;
+            justify-content: center;
+            margin-top: 0;
+        }}
+
+        .show-more-button {{
+            appearance: none;
+            border: 1px solid var(--line);
+            background: transparent;
+            color: var(--text);
+            padding: 9px 12px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease;
+        }}
+
+        .show-more-button:hover {{
+            background: rgba(255,255,255,0.6);
+            border-color: rgba(31,26,23,0.4);
+        }}
+
+        .show-more-button .chevron {{
+            display: inline-block;
+            margin-left: 4px;
+            transform: translateY(1px);
+        }}
+
+        /* === Detail modal === */
+        .detail-modal {{
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 16, 12, 0.78);
+            display: none;
+            align-items: stretch;
+            justify-content: center;
+            z-index: 2500;
+            padding: 0;
+        }}
+
+        .detail-modal.is-open {{
+            display: flex;
+        }}
+
+        .detail-modal-stage {{
+            position: relative;
+            background: #ffffff;
+            width: 100%;
+            max-width: 720px;
+            max-height: 100vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }}
+
+        .detail-modal-close {{
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.94);
+            color: #1f1a17;
+            font-size: 24px;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+            z-index: 10;
+        }}
+
+        .detail-modal-close:hover {{
+            background: white;
+        }}
+
+        .modal-content-inner {{
+            display: flex;
+            flex-direction: column;
+        }}
+
+        .modal-image-wrap {{
+            background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(239,232,220,0.9));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 28px 24px;
+            min-height: 320px;
+            border-bottom: 1px solid var(--line);
+        }}
+
+        .modal-art-img {{
+            max-width: 100%;
+            max-height: 460px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            background: #f3efe8;
+            border: 6px solid white;
+            border-radius: 8px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }}
+
+        .modal-info {{
+            padding: 22px 24px 28px;
+        }}
+
+        .modal-header {{
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--line);
+        }}
+
+        .modal-info .artist-name {{
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 28px;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }}
+
+        .modal-info .artwork-title {{
+            margin-top: 6px;
+            font-size: 16px;
+            font-style: italic;
+            color: var(--muted);
+        }}
+
+        .modal-price-row {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }}
+
+        .modal-badges {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }}
+
+        .modal-badges:empty {{
+            display: none;
+        }}
+
+        .modal-specs {{
+            margin-bottom: 16px;
+            border-top: 1px solid var(--line);
+            padding-top: 12px;
+        }}
+
+        .modal-specs:empty {{
+            display: none;
+            border-top: none;
+            padding-top: 0;
+        }}
+
+        .modal-seller {{
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 16px 0;
+            border-top: 1px solid var(--line);
+        }}
+
+        .modal-seller .seller-label {{
+            color: var(--muted);
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }}
+
+        .modal-seller .seller-name {{
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text);
+        }}
+
+        .modal-actions {{
+            margin-top: 8px;
+            padding-top: 16px;
+            border-top: 1px solid var(--line);
+        }}
+
+        .modal-actions .save-listing-button.modal-save-button {{
+            width: 100%;
+            justify-content: center;
+        }}
+
         @media (max-width: 1200px) {{
             .filters {{
                 grid-template-columns: 1fr 1fr 1fr;
@@ -1704,9 +2088,9 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             }}
 
             /* === Mobile 2-up grid with rightsized cards ===
-               To switch to 3-up (very compact), change `repeat(2, ...)` below to `repeat(3, ...)`
-               and you'll likely want to halve the font sizes too. To revert to the original
-               1-up layout, change `repeat(2, minmax(0, 1fr))` to `1fr`. */
+               To switch to 3-up (compact), change `repeat(2, ...)` below to `repeat(3, ...)`.
+               To revert to 1-up, change to `1fr`.
+               Card-only rules use `.card .X` so modal contents render at modal-appropriate sizes. */
             .grid {{
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 14px;
@@ -1716,115 +2100,115 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                 border-radius: 16px;
             }}
 
-            .card-image-wrap {{
-                min-height: 160px;
-                padding: 12px;
+            .card .card-image-wrap {{
+                min-height: 140px;
+                padding: 10px;
             }}
 
-            .art-img {{
-                max-height: 200px;
+            .card .art-img {{
+                max-height: 180px;
                 border-width: 3px;
                 border-radius: 6px;
             }}
 
-            .card-body {{
+            .card .card-body {{
                 padding: 12px;
             }}
 
-            .card-header {{
-                gap: 4px;
-            }}
-
-            .artist-name {{
-                font-size: 18px;
+            .card .artist-name {{
+                font-size: 16px;
                 line-height: 1.1;
                 letter-spacing: -0.025em;
             }}
 
-            .artwork-title {{
-                font-size: 12px;
-                margin-top: 4px;
+            .card .artwork-title {{
+                font-size: 11px;
+                margin-top: 3px;
             }}
 
-            .price {{
-                font-size: 17px;
-                margin-top: 6px;
+            .card .card-price-row {{
+                margin-top: 8px;
+                gap: 6px;
             }}
 
-            .price-drop-label {{
-                font-size: 9px;
-                padding: 3px 6px;
-                letter-spacing: 0.06em;
+            .card .price {{
+                font-size: 15px;
+                margin: 0;
             }}
 
-            .old-price {{
-                font-size: 12px;
+            .card .price-drop-label {{
+                font-size: 8px;
+                padding: 2px 5px;
+                letter-spacing: 0.04em;
             }}
 
-            .new-price {{
-                font-size: 17px;
+            .card .old-price {{
+                font-size: 11px;
             }}
 
-            .badges {{
-                gap: 4px;
+            .card .new-price {{
+                font-size: 15px;
+            }}
+
+            .card .card-badge {{
+                font-size: 10px;
+                padding: 3px 7px;
+            }}
+
+            .card .sold-mark,
+            .card .pending-mark {{
+                font-size: 10px;
+                padding: 2px 7px;
+            }}
+
+            .card .save-listing-button.corner-heart {{
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+                top: 8px;
+                right: 8px;
+            }}
+
+            .card .card-actions {{
                 margin-top: 10px;
+                gap: 6px;
             }}
 
-            .badge,
-            .status-pill {{
-                padding: 4px 8px;
-                font-size: 10px;
+            .card .contact-seller-button {{
+                font-size: 11px;
+                padding: 8px 10px;
             }}
 
-            .specs {{
-                margin-top: 10px;
-                padding-top: 8px;
-            }}
-
-            .spec-row {{
-                gap: 8px;
-                padding: 4px 0;
-            }}
-
-            .spec-label {{
-                font-size: 10px;
-            }}
-
-            .spec-value {{
-                font-size: 12px;
-            }}
-
-            .seller {{
-                margin-top: 12px;
-            }}
-
-            .seller-label {{
-                font-size: 10px;
-            }}
-
-            .seller-name {{
-                font-size: 14px;
-            }}
-
-            .contact-seller-button {{
+            .card .show-more-button {{
                 font-size: 11px;
                 padding: 7px 10px;
-                margin-top: 6px;
             }}
 
-            .listing-actions {{
-                margin-top: 10px;
+            /* === Detail modal sizing on mobile === */
+            .detail-modal-stage {{
+                max-width: none;
+                border-radius: 0;
             }}
 
-            .save-listing-button {{
-                font-size: 12px;
-                padding: 7px 10px;
+            .modal-image-wrap {{
+                min-height: 240px;
+                padding: 18px;
             }}
 
-            .notes {{
-                font-size: 12px;
-                margin-top: 8px;
-                line-height: 1.4;
+            .modal-art-img {{
+                max-height: 320px;
+            }}
+
+            .modal-info {{
+                padding: 18px 18px 24px;
+            }}
+
+            .modal-info .artist-name {{
+                font-size: 22px;
+            }}
+
+            .modal-info .artwork-title {{
+                font-size: 14px;
             }}
         }}
     </style>
@@ -1931,6 +2315,13 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
         <div class="lightbox-hint">Tap outside or × to close. Pinch to zoom on mobile.</div>
     </div>
 
+    <div class="detail-modal" id="detailModal" aria-hidden="true" role="dialog" aria-label="Listing details">
+        <div class="detail-modal-stage">
+            <button class="detail-modal-close" id="detailModalClose" aria-label="Close listing details">×</button>
+            <div class="detail-modal-content" id="detailModalContent"></div>
+        </div>
+    </div>
+
 
     <script>
         const STORAGE_KEY = "savedListings";
@@ -1988,11 +2379,16 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
 
         function updateSavedButtons() {{
             const savedIds = getSavedListings();
-            saveButtons.forEach((button) => {{
+            // Re-query each call so save buttons rendered inside the modal also sync.
+            const allSaveButtons = document.querySelectorAll(".save-listing-button");
+            allSaveButtons.forEach((button) => {{
                 const id = button.dataset.listingId;
                 const saved = savedIds.includes(id);
                 button.classList.toggle("is-saved", saved);
-                button.textContent = saved ? "♥ Saved" : "♡ Save Listing";
+                const isCornerHeart = button.classList.contains("corner-heart");
+                button.textContent = isCornerHeart
+                    ? (saved ? "♥" : "♡")
+                    : (saved ? "♥ Saved" : "♡ Save Listing");
                 button.setAttribute("aria-pressed", saved ? "true" : "false");
             }});
             savedCount.textContent = `${{savedIds.length}} saved`;
@@ -2121,21 +2517,68 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             document.body.style.overflow = "";
         }}
 
-        imageButtons.forEach((button) => {{
-            button.addEventListener("click", () => {{
-                openLightbox(button.dataset.fullsrc, button.dataset.alt);
-            }});
+        // === Detail modal ===
+        const detailModal = document.getElementById("detailModal");
+        const detailModalContent = document.getElementById("detailModalContent");
+        const detailModalClose = document.getElementById("detailModalClose");
+
+        function openDetailModal(card) {{
+            if (!card) return;
+            const template = card.querySelector(".modal-content-template");
+            if (!template) return;
+            detailModalContent.innerHTML = "";
+            detailModalContent.appendChild(template.content.cloneNode(true));
+            detailModal.classList.add("is-open");
+            detailModal.setAttribute("aria-hidden", "false");
+            const stage = detailModal.querySelector(".detail-modal-stage");
+            if (stage) stage.scrollTop = 0;
+            document.body.style.overflow = "hidden";
+            // Sync save button state for the freshly-cloned modal save button.
+            updateSavedButtons();
+        }}
+
+        function closeDetailModal() {{
+            detailModal.classList.remove("is-open");
+            detailModal.setAttribute("aria-hidden", "true");
+            detailModalContent.innerHTML = "";
+            // Don't unlock body scroll if the lightbox is still open.
+            if (!lightbox.classList.contains("is-open")) {{
+                document.body.style.overflow = "";
+            }}
+        }}
+
+        // Delegated click handler — covers buttons in cards and inside the modal.
+        document.addEventListener("click", (event) => {{
+            const imgBtn = event.target.closest(".image-open");
+            if (imgBtn) {{
+                event.preventDefault();
+                openLightbox(imgBtn.dataset.fullsrc, imgBtn.dataset.alt);
+                return;
+            }}
+
+            const saveBtn = event.target.closest(".save-listing-button");
+            if (saveBtn) {{
+                event.preventDefault();
+                toggleSavedListing(saveBtn.dataset.listingId);
+                return;
+            }}
+
+            const showMoreBtn = event.target.closest(".show-more-button");
+            if (showMoreBtn) {{
+                event.preventDefault();
+                const card = showMoreBtn.closest(".card");
+                openDetailModal(card);
+                return;
+            }}
         }});
 
-        saveButtons.forEach((button) => {{
-            button.addEventListener("click", () => {{
-                toggleSavedListing(button.dataset.listingId);
-            }});
+        detailModalClose.addEventListener("click", closeDetailModal);
+
+        detailModal.addEventListener("click", (event) => {{
+            if (event.target === detailModal) {{
+                closeDetailModal();
+            }}
         }});
-
-       
-
-        
 
         lightboxClose.addEventListener("click", closeLightbox);
 
@@ -2146,8 +2589,13 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
         }});
 
         document.addEventListener("keydown", (event) => {{
-            if (event.key === "Escape" && lightbox.classList.contains("is-open")) {{
+            if (event.key !== "Escape") return;
+            if (lightbox.classList.contains("is-open")) {{
                 closeLightbox();
+                return;
+            }}
+            if (detailModal.classList.contains("is-open")) {{
+                closeDetailModal();
             }}
         }});
 
