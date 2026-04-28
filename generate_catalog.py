@@ -1702,6 +1702,130 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                 bottom: 12px;
                 font-size: 12px;
             }}
+
+            /* === Mobile 2-up grid with rightsized cards ===
+               To switch to 3-up (very compact), change `repeat(2, ...)` below to `repeat(3, ...)`
+               and you'll likely want to halve the font sizes too. To revert to the original
+               1-up layout, change `repeat(2, minmax(0, 1fr))` to `1fr`. */
+            .grid {{
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 14px;
+            }}
+
+            .card {{
+                border-radius: 16px;
+            }}
+
+            .card-image-wrap {{
+                min-height: 160px;
+                padding: 12px;
+            }}
+
+            .art-img {{
+                max-height: 200px;
+                border-width: 3px;
+                border-radius: 6px;
+            }}
+
+            .card-body {{
+                padding: 12px;
+            }}
+
+            .card-header {{
+                gap: 4px;
+            }}
+
+            .artist-name {{
+                font-size: 18px;
+                line-height: 1.1;
+                letter-spacing: -0.025em;
+            }}
+
+            .artwork-title {{
+                font-size: 12px;
+                margin-top: 4px;
+            }}
+
+            .price {{
+                font-size: 17px;
+                margin-top: 6px;
+            }}
+
+            .price-drop-label {{
+                font-size: 9px;
+                padding: 3px 6px;
+                letter-spacing: 0.06em;
+            }}
+
+            .old-price {{
+                font-size: 12px;
+            }}
+
+            .new-price {{
+                font-size: 17px;
+            }}
+
+            .badges {{
+                gap: 4px;
+                margin-top: 10px;
+            }}
+
+            .badge,
+            .status-pill {{
+                padding: 4px 8px;
+                font-size: 10px;
+            }}
+
+            .specs {{
+                margin-top: 10px;
+                padding-top: 8px;
+            }}
+
+            .spec-row {{
+                gap: 8px;
+                padding: 4px 0;
+            }}
+
+            .spec-label {{
+                font-size: 10px;
+            }}
+
+            .spec-value {{
+                font-size: 12px;
+            }}
+
+            .seller {{
+                margin-top: 12px;
+            }}
+
+            .seller-label {{
+                font-size: 10px;
+            }}
+
+            .seller-name {{
+                font-size: 14px;
+            }}
+
+            .contact-seller-button {{
+                font-size: 11px;
+                padding: 7px 10px;
+                margin-top: 6px;
+            }}
+
+            .listing-actions {{
+                margin-top: 10px;
+            }}
+
+            .save-listing-button {{
+                font-size: 12px;
+                padding: 7px 10px;
+            }}
+
+            .notes {{
+                font-size: 12px;
+                margin-top: 8px;
+                line-height: 1.4;
+            }}
         }}
     </style>
 </head>
