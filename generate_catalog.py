@@ -547,15 +547,15 @@ def build_card(row, image_src):
 
     # ---------- Modal-only content ----------
 
+    # Skip the status pill when the listing is available — the catalog only shows
+    # available/pending listings, so an "Available" pill would be redundant noise.
     modal_status_pill = ""
-    if status_raw.strip():
+    if status_raw.strip() and status_lower != "available":
         status_class = "status-pill"
         if is_sold:
             status_class += " status-sold"
         elif is_pending:
             status_class += " status-pending"
-        elif status_lower == "available":
-            status_class += " status-available"
         modal_status_pill = f'<span class="{status_class}">{safe_text(status_raw)}</span>'
 
     modal_badge_parts = []
@@ -579,12 +579,6 @@ def build_card(row, image_src):
                 {contact_button_html}
             </div>
         """
-
-    modal_save_button_html = (
-        f'<button class="save-listing-button modal-save-button" type="button" '
-        f'data-listing-id="{listing_id}" aria-label="Save listing">'
-        f'♡ Save Listing</button>'
-    )
 
     searchable_text = " ".join(
         [
@@ -647,6 +641,7 @@ def build_card(row, image_src):
                         <div class="artwork-title">{artwork_title}</div>
                         <div class="modal-price-row">
                             {base_price_html}
+                            {category_badge_html}
                             {modal_status_pill}
                         </div>
                     </div>
@@ -656,10 +651,6 @@ def build_card(row, image_src):
                     <div class="modal-specs">{modal_specs_html}</div>
 
                     {modal_seller_html}
-
-                    <div class="modal-actions">
-                        {modal_save_button_html}
-                    </div>
 
                     {modal_notes_html}
                 </div>
@@ -1242,7 +1233,8 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                 linear-gradient(180deg, rgba(255,255,255,0.6), rgba(239,232,220,0.9));
             border-bottom: 1px solid var(--line);
             padding: 22px;
-            min-height: 340px;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
         }}
 
         .image-open {{
@@ -1256,11 +1248,12 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             align-items: center;
             justify-content: center;
             width: 100%;
+            height: 100%;
         }}
 
         .art-img {{
             max-width: 100%;
-            max-height: 380px;
+            max-height: 100%;
             width: auto;
             height: auto;
             object-fit: contain;
@@ -1288,9 +1281,9 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
         .artist-name {{
             margin: 0;
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 30px;
-            line-height: 0.98;
-            letter-spacing: -0.035em;
+            font-size: 20px;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
             font-weight: 600;
         }}
 
@@ -1688,24 +1681,40 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
 
         .card-body .artist-name {{
             margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }}
+
+        .card-body .artwork-title {{
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }}
 
         .card-price-row {{
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             margin-top: 10px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
         }}
 
         .card-price-row .price {{
             margin: 0;
+            white-space: nowrap;
+            flex-shrink: 0;
         }}
 
         .card-badge {{
-            font-size: 11px;
-            padding: 4px 8px;
+            font-size: 10px;
+            padding: 3px 7px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+            flex-shrink: 1;
         }}
 
         .price-with-status {{
@@ -1869,9 +1878,9 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
         .modal-info .artist-name {{
             margin: 0;
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 28px;
-            line-height: 1.05;
-            letter-spacing: -0.03em;
+            font-size: 22px;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
             font-weight: 600;
         }}
 
@@ -1887,7 +1896,17 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             align-items: center;
             gap: 12px;
             margin-top: 12px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+        }}
+
+        .modal-price-row .price {{
+            white-space: nowrap;
+            flex-shrink: 0;
+        }}
+
+        .modal-price-row .badge,
+        .modal-price-row .status-pill {{
+            white-space: nowrap;
         }}
 
         .modal-badges {{
@@ -1935,16 +1954,6 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             color: var(--text);
         }}
 
-        .modal-actions {{
-            margin-top: 8px;
-            padding-top: 16px;
-            border-top: 1px solid var(--line);
-        }}
-
-        .modal-actions .save-listing-button.modal-save-button {{
-            width: 100%;
-            justify-content: center;
-        }}
 
         @media (max-width: 1200px) {{
             .filters {{
@@ -2053,15 +2062,6 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                 align-items: flex-start;
             }}
 
-            .card-image-wrap {{
-                min-height: 280px;
-                padding: 18px;
-            }}
-
-            .art-img {{
-                max-height: 320px;
-            }}
-
             .seller-name {{
                 font-size: 17px;
             }}
@@ -2101,12 +2101,10 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             }}
 
             .card .card-image-wrap {{
-                min-height: 140px;
                 padding: 10px;
             }}
 
             .card .art-img {{
-                max-height: 180px;
                 border-width: 3px;
                 border-radius: 6px;
             }}
@@ -2116,7 +2114,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             }}
 
             .card .artist-name {{
-                font-size: 16px;
+                font-size: 14px;
                 line-height: 1.1;
                 letter-spacing: -0.025em;
             }}
@@ -2204,7 +2202,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             }}
 
             .modal-info .artist-name {{
-                font-size: 22px;
+                font-size: 18px;
             }}
 
             .modal-info .artwork-title {{
