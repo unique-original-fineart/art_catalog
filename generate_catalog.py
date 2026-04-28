@@ -527,8 +527,13 @@ def build_card(row, image_src):
 
     category_badge_html = ""
     if artwork_category_raw:
+        category_class_modifier = ""
+        if artwork_category_raw == "Unique/Original":
+            category_class_modifier = " category-unique"
+        elif artwork_category_raw == "Limited Edition":
+            category_class_modifier = " category-limited"
         category_badge_html = (
-            f'<span class="badge artwork-category-badge card-badge">'
+            f'<span class="badge artwork-category-badge card-badge{category_class_modifier}">'
             f'{safe_text(artwork_category_raw)}</span>'
         )
 
@@ -575,8 +580,10 @@ def build_card(row, image_src):
         modal_seller_html = f"""
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">{seller_name}</span>
-                {contact_button_html}
+                <div class="modal-seller-row">
+                    <span class="seller-name">{seller_name}</span>
+                    {contact_button_html}
+                </div>
             </div>
         """
 
@@ -633,7 +640,9 @@ def build_card(row, image_src):
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="{full_image_src}" class="modal-art-img" alt="{alt_text}">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="{full_image_src}" data-alt="{alt_text}" aria-label="Open artwork image">
+                        <img src="{full_image_src}" class="modal-art-img" alt="{alt_text}">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -1375,6 +1384,12 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             border-color: #cbd9ef;
         }}
 
+        .artwork-category-badge.category-unique {{
+            background: #e6f5e8;
+            color: #1e5e2a;
+            border-color: #b8dfbf;
+        }}
+
         .price-drop-badge {{
             background: #fff4df;
             color: #7a4d00;
@@ -1541,7 +1556,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             align-items: center;
             justify-content: center;
             padding: 20px;
-            z-index: 2000;
+            z-index: 3000;
         }}
 
         .lightbox.is-open {{
@@ -1791,6 +1806,54 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             transform: translateY(1px);
         }}
 
+        /* === Empty state (no filter matches) === */
+        .empty-state {{
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 56px 24px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            box-shadow: var(--shadow-soft);
+        }}
+
+        .empty-state[hidden] {{
+            display: none;
+        }}
+
+        .empty-state-title {{
+            margin: 0 0 8px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }}
+
+        .empty-state-message {{
+            margin: 0 0 20px;
+            color: var(--muted);
+            font-size: 15px;
+        }}
+
+        .empty-state-clear {{
+            appearance: none;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.96);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease;
+        }}
+
+        .empty-state-clear:hover {{
+            background: white;
+            border-color: rgba(31,26,23,0.4);
+        }}
+
         /* === Detail modal === */
         .detail-modal {{
             position: fixed;
@@ -1865,6 +1928,12 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             box-shadow: 0 12px 30px rgba(0,0,0,0.12);
         }}
 
+        .image-open.modal-image-zoom {{
+            width: auto;
+            height: auto;
+            max-width: 100%;
+        }}
+
         .modal-info {{
             padding: 22px 24px 28px;
         }}
@@ -1935,7 +2004,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
         .modal-seller {{
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             padding: 16px 0;
             border-top: 1px solid var(--line);
         }}
@@ -1947,11 +2016,26 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             text-transform: uppercase;
         }}
 
+        .modal-seller-row {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }}
+
         .modal-seller .seller-name {{
             font-size: 18px;
             font-weight: 700;
             line-height: 1.2;
             color: var(--text);
+            min-width: 0;
+            flex: 1 1 auto;
+        }}
+
+        .modal-seller-row .contact-seller-button {{
+            margin-top: 0;
+            flex-shrink: 0;
         }}
 
 
@@ -2130,7 +2214,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             }}
 
             .card .price {{
-                font-size: 15px;
+                font-size: 13px;
                 margin: 0;
             }}
 
@@ -2141,16 +2225,16 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             }}
 
             .card .old-price {{
-                font-size: 11px;
+                font-size: 10px;
             }}
 
             .card .new-price {{
-                font-size: 15px;
+                font-size: 13px;
             }}
 
             .card .card-badge {{
-                font-size: 10px;
-                padding: 3px 7px;
+                font-size: 9px;
+                padding: 2px 6px;
             }}
 
             .card .sold-mark,
@@ -2292,6 +2376,11 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
 
             <div class="grid" id="catalogGrid">
                 {catalog_cards}
+                <div class="empty-state" id="emptyState" hidden>
+                    <h3 class="empty-state-title">No listings match your filters</h3>
+                    <p class="empty-state-message">Try clearing or adjusting your filters above.</p>
+                    <button class="empty-state-clear" id="clearFiltersFromEmpty" type="button">Clear all filters</button>
+                </div>
             </div>
         </section>
     </div>
@@ -2336,6 +2425,8 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
         const resultCount = document.getElementById("resultCount");
         const savedCount = document.getElementById("savedCount");
         const backToTop = document.getElementById("backToTop");
+        const emptyState = document.getElementById("emptyState");
+        const clearFiltersFromEmpty = document.getElementById("clearFiltersFromEmpty");
 
         const lightbox = document.getElementById("lightbox");
         const lightboxImage = document.getElementById("lightboxImage");
@@ -2490,6 +2581,18 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
 
             sortCards(visibleCards);
             resultCount.textContent = `${{visibleCards.length}} listing${{visibleCards.length === 1 ? "" : "s"}} shown`;
+            emptyState.hidden = visibleCards.length > 0;
+        }}
+
+        function clearAllFilters() {{
+            searchInput.value = "";
+            savedFilter.value = "";
+            sellerFilter.value = "";
+            artistFilter.value = "";
+            categoryFilter.value = "";
+            priceFilter.value = "";
+            sortFilter.value = "newest";
+            applyFilters();
         }}
 
 
@@ -2512,7 +2615,10 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             lightbox.setAttribute("aria-hidden", "true");
             lightboxImage.src = "";
             lightboxImage.alt = "";
-            document.body.style.overflow = "";
+            // Don't unlock body scroll if the detail modal is still open behind us.
+            if (!detailModal.classList.contains("is-open")) {{
+                document.body.style.overflow = "";
+            }}
         }}
 
         // === Detail modal ===
@@ -2616,6 +2722,8 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             el.addEventListener("input", applyFilters);
             el.addEventListener("change", applyFilters);
         }});
+
+        clearFiltersFromEmpty.addEventListener("click", clearAllFilters);
 
         updateSavedButtons();
         applyFilters();
