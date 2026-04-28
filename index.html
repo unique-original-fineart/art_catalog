@@ -295,7 +295,8 @@
                 linear-gradient(180deg, rgba(255,255,255,0.6), rgba(239,232,220,0.9));
             border-bottom: 1px solid var(--line);
             padding: 22px;
-            min-height: 340px;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
         }
 
         .image-open {
@@ -309,11 +310,12 @@
             align-items: center;
             justify-content: center;
             width: 100%;
+            height: 100%;
         }
 
         .art-img {
             max-width: 100%;
-            max-height: 380px;
+            max-height: 100%;
             width: auto;
             height: auto;
             object-fit: contain;
@@ -341,9 +343,9 @@
         .artist-name {
             margin: 0;
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 30px;
-            line-height: 0.98;
-            letter-spacing: -0.035em;
+            font-size: 20px;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
             font-weight: 600;
         }
 
@@ -741,24 +743,40 @@
 
         .card-body .artist-name {
             margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-body .artwork-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .card-price-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             margin-top: 10px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
         }
 
         .card-price-row .price {
             margin: 0;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .card-badge {
-            font-size: 11px;
-            padding: 4px 8px;
+            font-size: 10px;
+            padding: 3px 7px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+            flex-shrink: 1;
         }
 
         .price-with-status {
@@ -922,9 +940,9 @@
         .modal-info .artist-name {
             margin: 0;
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 28px;
-            line-height: 1.05;
-            letter-spacing: -0.03em;
+            font-size: 22px;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
             font-weight: 600;
         }
 
@@ -940,7 +958,17 @@
             align-items: center;
             gap: 12px;
             margin-top: 12px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+        }
+
+        .modal-price-row .price {
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .modal-price-row .badge,
+        .modal-price-row .status-pill {
+            white-space: nowrap;
         }
 
         .modal-badges {
@@ -988,16 +1016,6 @@
             color: var(--text);
         }
 
-        .modal-actions {
-            margin-top: 8px;
-            padding-top: 16px;
-            border-top: 1px solid var(--line);
-        }
-
-        .modal-actions .save-listing-button.modal-save-button {
-            width: 100%;
-            justify-content: center;
-        }
 
         @media (max-width: 1200px) {
             .filters {
@@ -1106,15 +1124,6 @@
                 align-items: flex-start;
             }
 
-            .card-image-wrap {
-                min-height: 280px;
-                padding: 18px;
-            }
-
-            .art-img {
-                max-height: 320px;
-            }
-
             .seller-name {
                 font-size: 17px;
             }
@@ -1154,12 +1163,10 @@
             }
 
             .card .card-image-wrap {
-                min-height: 140px;
                 padding: 10px;
             }
 
             .card .art-img {
-                max-height: 180px;
                 border-width: 3px;
                 border-radius: 6px;
             }
@@ -1169,7 +1176,7 @@
             }
 
             .card .artist-name {
-                font-size: 16px;
+                font-size: 14px;
                 line-height: 1.1;
                 letter-spacing: -0.025em;
             }
@@ -1257,7 +1264,7 @@
             }
 
             .modal-info .artist-name {
-                font-size: 22px;
+                font-size: 18px;
             }
 
             .modal-info .artwork-title {
@@ -1404,7 +1411,8 @@
                         <div class="artwork-title">Mini Elements</div>
                         <div class="modal-price-row">
                             <div class="price">$995</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -1419,10 +1427,6 @@
                 <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0001" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">Entire set of 4 artworks!</p>
                 </div>
@@ -1488,7 +1492,8 @@
                         <div class="artwork-title">Baby Blue</div>
                         <div class="modal-price-row">
                             <div class="price">$2,500</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -1503,10 +1508,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0002" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work</p>
                 </div>
@@ -1572,7 +1573,8 @@
                         <div class="artwork-title">Butterflies Dream</div>
                         <div class="modal-price-row">
                             <div class="price">$4,749</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -1587,10 +1589,6 @@
                 <a href="https://www.facebook.com/ginodifilippojr" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0003" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">Unique Work</p>
                 </div>
@@ -1656,7 +1654,8 @@
                         <div class="artwork-title">Tiny Red</div>
                         <div class="modal-price-row">
                             <div class="price">$2,750</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -1671,10 +1670,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0004" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work.    Nbjones85@gmail.com</p>
                 </div>
@@ -1740,7 +1735,8 @@
                         <div class="artwork-title">The Love</div>
                         <div class="modal-price-row">
                             <div class="price">$3,500</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -1755,10 +1751,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0005" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work.  Full insurance included. Nbjones85@gmail.com</p>
                 </div>
@@ -1824,7 +1816,8 @@
                         <div class="artwork-title">Mini Silver Rose</div>
                         <div class="modal-price-row">
                             <div class="price">$1,000</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -1839,10 +1832,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0006" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work.  Full insurance included. Nbjones85@gmail.com</p>
                 </div>
@@ -1908,7 +1897,8 @@
                         <div class="artwork-title">The Love on Blends 2006</div>
                         <div class="modal-price-row">
                             <div class="price">$2,300</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -1923,10 +1913,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0007" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">From 2006.  A unique work.  Hand signed in acrylic by artist.  Full insurance included. Nbjones85@gmail.com</p>
                 </div>
@@ -1992,7 +1978,8 @@
                         <div class="artwork-title">Dancing Light</div>
                         <div class="modal-price-row">
                             <div class="price">$3,500</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2007,10 +1994,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0008" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work.  Full insurance included. Nbjones85@gmail.com</p>
                 </div>
@@ -2076,7 +2059,8 @@
                         <div class="artwork-title">Center of Attention</div>
                         <div class="modal-price-row">
                             <div class="price">$900</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2091,10 +2075,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0009" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work.  Full insurance included. Nbjones85@gmail.com</p>
                 </div>
@@ -2160,7 +2140,8 @@
                         <div class="artwork-title">Falling Grace</div>
                         <div class="modal-price-row">
                             <div class="price">$1,800</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2175,10 +2156,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0010" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work.  Full insurance included. Park West appraisal included, but paper COA was misplaced and not included.  This artwork is in my Park West clarity account and digital ownership can be transferred if desired. Nbjones85@gmail.com</p>
                 </div>
@@ -2244,7 +2221,8 @@
                         <div class="artwork-title">Holidays XXV</div>
                         <div class="modal-price-row">
                             <div class="price">$2,200</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2259,10 +2237,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0012" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work, and overpainted.  Full insurance included. Nbjones85@gmail.com</p>
                 </div>
@@ -2328,7 +2302,8 @@
                         <div class="artwork-title">Mona Lisa</div>
                         <div class="modal-price-row">
                             <div class="price">$4,000</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2343,10 +2318,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0013" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work.  Full insurance included. Nbjones85@gmail.com</p>
                 </div>
@@ -2412,7 +2383,8 @@
                         <div class="artwork-title">Liberty Head II on Blends</div>
                         <div class="modal-price-row">
                             <div class="price">$1,100</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2427,10 +2399,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0014" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work.  Full insurance included.  From 2006.Nbjones85@gmail.com</p>
                 </div>
@@ -2496,7 +2464,8 @@
                         <div class="artwork-title">Mini Red Rose</div>
                         <div class="modal-price-row">
                             <div class="price">$1,000</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2511,10 +2480,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0015" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work.  Full insurance included.Nbjones85@gmail.com</p>
                 </div>
@@ -2580,7 +2545,8 @@
                         <div class="artwork-title">Day Dream</div>
                         <div class="modal-price-row">
                             <div class="price">$3,000</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2595,10 +2561,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0016" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work. From 2019. Full insurance included.Nbjones85@gmail.com</p>
                 </div>
@@ -2664,7 +2626,8 @@
                         <div class="artwork-title">Day Dream</div>
                         <div class="modal-price-row">
                             <div class="price">$3,000</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2679,10 +2642,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0017" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">Unique work. From 2019. Full insurance included.  Park West appraisal included.  Paper COA was misplaced, but this artwork is in my Clarity account, and digital ownership can be transferred through Park West.</p>
                 </div>
@@ -2748,7 +2707,8 @@
                         <div class="artwork-title">Day Dream</div>
                         <div class="modal-price-row">
                             <div class="price">$3,000</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2763,10 +2723,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0018" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">Unique work. Full insurance included. From 2020.Nbjones85@gmail.com</p>
                 </div>
@@ -2832,7 +2788,8 @@
                         <div class="artwork-title">The Pink Heart</div>
                         <div class="modal-price-row">
                             <div class="price">$1,100</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2847,10 +2804,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0019" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work. Full insurance include included. From 2024.Nbjones85@gmail.com</p>
                 </div>
@@ -2916,7 +2869,8 @@
                         <div class="artwork-title">Neon Peace, Love and Happiness</div>
                         <div class="modal-price-row">
                             <div class="price">$1,100</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -2931,10 +2885,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0020" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">Unique work. Full insurance included. From 2024.Nbjones85@gmail.com</p>
                 </div>
@@ -3000,7 +2950,8 @@
                         <div class="artwork-title">Libery Head II Collage (Large)</div>
                         <div class="modal-price-row">
                             <div class="price">$1,800</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -3015,10 +2966,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0021" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work.  Appraisal included.  Paper COA misplaced, but digital ownership through Park West transfer is available upon request as this artwork is in my Clarity account.  From 1997.</p>
                 </div>
@@ -3084,7 +3031,8 @@
                         <div class="artwork-title">Edge of Truth</div>
                         <div class="modal-price-row">
                             <div class="price">$2,200</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -3099,10 +3047,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0022" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work. Full insurance included. Artwork from 2024.  Nbjones85@gmail.com</p>
                 </div>
@@ -3168,7 +3112,8 @@
                         <div class="artwork-title">Aquarius Beluga Hope</div>
                         <div class="modal-price-row">
                             <div class="price">$2,000</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -3183,10 +3128,6 @@
                 <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0023" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">A unique work.  Full insurance included. Artwork from 2023.Nbjones85@gmail.com</p>
                 </div>
@@ -3252,7 +3193,8 @@
                         <div class="artwork-title">Desert Calm</div>
                         <div class="modal-price-row">
                             <div class="price">$350</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                            
                         </div>
                     </div>
 
@@ -3267,10 +3209,6 @@
                 <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0024" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">Really shines in the light. Hand signed limited edition. In great condition at a great price!</p>
                 </div>
@@ -3336,7 +3274,8 @@
                         <div class="artwork-title">Grape Toast</div>
                         <div class="modal-price-row">
                             <div class="price">$600</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                            
                         </div>
                     </div>
 
@@ -3351,10 +3290,6 @@
                 <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0025" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">Been sold out for years and hard to find!!-Hand signed limited edition #22/395. Seriolithograph on wove paper (combination of serigraphy + lithography for added depth and texture).</p>
                 </div>
@@ -3420,7 +3355,8 @@
                         <div class="artwork-title">Better World</div>
                         <div class="modal-price-row">
                             <div class="price">$1,625</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                            
                         </div>
                     </div>
 
@@ -3435,10 +3371,6 @@
                 <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0026" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">Hors commerce edition of 50. Hand signed in pencil by Peter Max. Comes with a COA and appraisal. In great condition. Gallery retail: $3600</p>
                 </div>
@@ -3504,7 +3436,8 @@
                         <div class="artwork-title">Ray of Hope</div>
                         <div class="modal-price-row">
                             <div class="price">$625</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                            
                         </div>
                     </div>
 
@@ -3519,10 +3452,6 @@
                 <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0027" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">Beautiful brand new custom frame. No paperwork but comes with a PW registration sticker on verso. In great condition.</p>
                 </div>
@@ -3588,7 +3517,8 @@
                         <div class="artwork-title">New Beginnings</div>
                         <div class="modal-price-row">
                             <div class="price">$2,250</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -3603,10 +3533,6 @@
                 <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0028" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">Gorgeous original. The tree really pops off the artwork in 3D! Comes with an older appraisal. Retails for over $6K!</p>
                 </div>
@@ -3672,7 +3598,8 @@
                         <div class="artwork-title">Test</div>
                         <div class="modal-price-row">
                             <div class="price">$400</div>
-                            <span class="status-pill status-available">available</span>
+                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            
                         </div>
                     </div>
 
@@ -3687,10 +3614,6 @@
                 <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
             </div>
         
-
-                    <div class="modal-actions">
-                        <button class="save-listing-button modal-save-button" type="button" data-listing-id="listing_0030" aria-label="Save listing">♡ Save Listing</button>
-                    </div>
 
                     <p class="notes">Test</p>
                 </div>
