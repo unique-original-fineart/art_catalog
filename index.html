@@ -437,6 +437,12 @@
             border-color: #cbd9ef;
         }
 
+        .artwork-category-badge.category-unique {
+            background: #e6f5e8;
+            color: #1e5e2a;
+            border-color: #b8dfbf;
+        }
+
         .price-drop-badge {
             background: #fff4df;
             color: #7a4d00;
@@ -603,7 +609,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            z-index: 2000;
+            z-index: 3000;
         }
 
         .lightbox.is-open {
@@ -853,6 +859,54 @@
             transform: translateY(1px);
         }
 
+        /* === Empty state (no filter matches) === */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 56px 24px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .empty-state[hidden] {
+            display: none;
+        }
+
+        .empty-state-title {
+            margin: 0 0 8px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+
+        .empty-state-message {
+            margin: 0 0 20px;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .empty-state-clear {
+            appearance: none;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.96);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease;
+        }
+
+        .empty-state-clear:hover {
+            background: white;
+            border-color: rgba(31,26,23,0.4);
+        }
+
         /* === Detail modal === */
         .detail-modal {
             position: fixed;
@@ -927,6 +981,12 @@
             box-shadow: 0 12px 30px rgba(0,0,0,0.12);
         }
 
+        .image-open.modal-image-zoom {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+        }
+
         .modal-info {
             padding: 22px 24px 28px;
         }
@@ -997,7 +1057,7 @@
         .modal-seller {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             padding: 16px 0;
             border-top: 1px solid var(--line);
         }
@@ -1009,11 +1069,26 @@
             text-transform: uppercase;
         }
 
+        .modal-seller-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
         .modal-seller .seller-name {
             font-size: 18px;
             font-weight: 700;
             line-height: 1.2;
             color: var(--text);
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+
+        .modal-seller-row .contact-seller-button {
+            margin-top: 0;
+            flex-shrink: 0;
         }
 
 
@@ -1192,7 +1267,7 @@
             }
 
             .card .price {
-                font-size: 15px;
+                font-size: 13px;
                 margin: 0;
             }
 
@@ -1203,16 +1278,16 @@
             }
 
             .card .old-price {
-                font-size: 11px;
+                font-size: 10px;
             }
 
             .card .new-price {
-                font-size: 15px;
+                font-size: 13px;
             }
 
             .card .card-badge {
-                font-size: 10px;
-                padding: 3px 7px;
+                font-size: 9px;
+                padding: 2px 6px;
             }
 
             .card .sold-mark,
@@ -1391,7 +1466,7 @@
 
             <div class="card-price-row">
                 <div class="price">$995</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -1403,7 +1478,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1HgdHdvOvOtymo4C1KglavoaqLFEwxHm_&sz=w1200" class="modal-art-img" alt="Mini Elements">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1HgdHdvOvOtymo4C1KglavoaqLFEwxHm_&sz=w1200" data-alt="Mini Elements" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1HgdHdvOvOtymo4C1KglavoaqLFEwxHm_&sz=w1200" class="modal-art-img" alt="Mini Elements">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -1411,7 +1488,7 @@
                         <div class="artwork-title">Mini Elements</div>
                         <div class="modal-price-row">
                             <div class="price">$995</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -1423,8 +1500,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Guy Scuderi</span>
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Guy Scuderi</span>
+                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -1472,7 +1551,7 @@
 
             <div class="card-price-row">
                 <div class="price">$2,500</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -1484,7 +1563,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1UvqzSUimkfp5qdVNIVFnJACDbFkKDXui&sz=w1200" class="modal-art-img" alt="Baby Blue">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1UvqzSUimkfp5qdVNIVFnJACDbFkKDXui&sz=w1200" data-alt="Baby Blue" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1UvqzSUimkfp5qdVNIVFnJACDbFkKDXui&sz=w1200" class="modal-art-img" alt="Baby Blue">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -1492,7 +1573,7 @@
                         <div class="artwork-title">Baby Blue</div>
                         <div class="modal-price-row">
                             <div class="price">$2,500</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -1504,8 +1585,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -1553,7 +1636,7 @@
 
             <div class="card-price-row">
                 <div class="price">$4,749</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -1565,7 +1648,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1g13a5Y4Z-vuy32aY6SrkW_Nf960syuX5&sz=w1200" class="modal-art-img" alt="Butterflies Dream">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1g13a5Y4Z-vuy32aY6SrkW_Nf960syuX5&sz=w1200" data-alt="Butterflies Dream" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1g13a5Y4Z-vuy32aY6SrkW_Nf960syuX5&sz=w1200" class="modal-art-img" alt="Butterflies Dream">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -1573,7 +1658,7 @@
                         <div class="artwork-title">Butterflies Dream</div>
                         <div class="modal-price-row">
                             <div class="price">$4,749</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -1585,8 +1670,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Gino DiFilippo Jr.</span>
-                <a href="https://www.facebook.com/ginodifilippojr" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Gino DiFilippo Jr.</span>
+                    <a href="https://www.facebook.com/ginodifilippojr" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -1634,7 +1721,7 @@
 
             <div class="card-price-row">
                 <div class="price">$2,750</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -1646,7 +1733,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1lXKFhdL2T_CeJQE-iKezmeHOQdkZ-OlT&sz=w1200" class="modal-art-img" alt="Tiny Red">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1lXKFhdL2T_CeJQE-iKezmeHOQdkZ-OlT&sz=w1200" data-alt="Tiny Red" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1lXKFhdL2T_CeJQE-iKezmeHOQdkZ-OlT&sz=w1200" class="modal-art-img" alt="Tiny Red">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -1654,7 +1743,7 @@
                         <div class="artwork-title">Tiny Red</div>
                         <div class="modal-price-row">
                             <div class="price">$2,750</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -1666,8 +1755,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -1715,7 +1806,7 @@
 
             <div class="card-price-row">
                 <div class="price">$3,500</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -1727,7 +1818,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1r5RTc2o8-qzdpeaNT0UGtV04D7Y-OPi3&sz=w1200" class="modal-art-img" alt="The Love">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1r5RTc2o8-qzdpeaNT0UGtV04D7Y-OPi3&sz=w1200" data-alt="The Love" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1r5RTc2o8-qzdpeaNT0UGtV04D7Y-OPi3&sz=w1200" class="modal-art-img" alt="The Love">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -1735,7 +1828,7 @@
                         <div class="artwork-title">The Love</div>
                         <div class="modal-price-row">
                             <div class="price">$3,500</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -1747,8 +1840,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -1796,7 +1891,7 @@
 
             <div class="card-price-row">
                 <div class="price">$1,000</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -1808,7 +1903,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1YuEO8pSji3XzjkxaVekZj4XkMuvG_5i5&sz=w1200" class="modal-art-img" alt="Mini Silver Rose">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1YuEO8pSji3XzjkxaVekZj4XkMuvG_5i5&sz=w1200" data-alt="Mini Silver Rose" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1YuEO8pSji3XzjkxaVekZj4XkMuvG_5i5&sz=w1200" class="modal-art-img" alt="Mini Silver Rose">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -1816,7 +1913,7 @@
                         <div class="artwork-title">Mini Silver Rose</div>
                         <div class="modal-price-row">
                             <div class="price">$1,000</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -1828,8 +1925,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -1877,7 +1976,7 @@
 
             <div class="card-price-row">
                 <div class="price">$2,300</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -1889,7 +1988,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=146XVnd6lANzKtwNq9SzAQrYpjXzXIRc3&sz=w1200" class="modal-art-img" alt="The Love on Blends 2006">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=146XVnd6lANzKtwNq9SzAQrYpjXzXIRc3&sz=w1200" data-alt="The Love on Blends 2006" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=146XVnd6lANzKtwNq9SzAQrYpjXzXIRc3&sz=w1200" class="modal-art-img" alt="The Love on Blends 2006">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -1897,7 +1998,7 @@
                         <div class="artwork-title">The Love on Blends 2006</div>
                         <div class="modal-price-row">
                             <div class="price">$2,300</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -1909,8 +2010,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -1958,7 +2061,7 @@
 
             <div class="card-price-row">
                 <div class="price">$3,500</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -1970,7 +2073,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=11fz1XnLsdzASagjIqnUyVHT-ig0yuPsj&sz=w1200" class="modal-art-img" alt="Dancing Light">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=11fz1XnLsdzASagjIqnUyVHT-ig0yuPsj&sz=w1200" data-alt="Dancing Light" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=11fz1XnLsdzASagjIqnUyVHT-ig0yuPsj&sz=w1200" class="modal-art-img" alt="Dancing Light">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -1978,7 +2083,7 @@
                         <div class="artwork-title">Dancing Light</div>
                         <div class="modal-price-row">
                             <div class="price">$3,500</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -1990,8 +2095,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2039,7 +2146,7 @@
 
             <div class="card-price-row">
                 <div class="price">$900</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2051,7 +2158,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1aj32cPTM0SZfItq_FZ2rWaTtSJEEyq9W&sz=w1200" class="modal-art-img" alt="Center of Attention">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1aj32cPTM0SZfItq_FZ2rWaTtSJEEyq9W&sz=w1200" data-alt="Center of Attention" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1aj32cPTM0SZfItq_FZ2rWaTtSJEEyq9W&sz=w1200" class="modal-art-img" alt="Center of Attention">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2059,7 +2168,7 @@
                         <div class="artwork-title">Center of Attention</div>
                         <div class="modal-price-row">
                             <div class="price">$900</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2071,8 +2180,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2120,7 +2231,7 @@
 
             <div class="card-price-row">
                 <div class="price">$1,800</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2132,7 +2243,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1mBuJE_fVA4qB9x9fBijC979BB8P2IaIt&sz=w1200" class="modal-art-img" alt="Falling Grace">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1mBuJE_fVA4qB9x9fBijC979BB8P2IaIt&sz=w1200" data-alt="Falling Grace" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1mBuJE_fVA4qB9x9fBijC979BB8P2IaIt&sz=w1200" class="modal-art-img" alt="Falling Grace">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2140,7 +2253,7 @@
                         <div class="artwork-title">Falling Grace</div>
                         <div class="modal-price-row">
                             <div class="price">$1,800</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2152,8 +2265,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2201,7 +2316,7 @@
 
             <div class="card-price-row">
                 <div class="price">$2,200</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2213,7 +2328,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=16_YPOxYjayx3YBI0E-4RW7ef5Q1gw83s&sz=w1200" class="modal-art-img" alt="Holidays XXV">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=16_YPOxYjayx3YBI0E-4RW7ef5Q1gw83s&sz=w1200" data-alt="Holidays XXV" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=16_YPOxYjayx3YBI0E-4RW7ef5Q1gw83s&sz=w1200" class="modal-art-img" alt="Holidays XXV">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2221,7 +2338,7 @@
                         <div class="artwork-title">Holidays XXV</div>
                         <div class="modal-price-row">
                             <div class="price">$2,200</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2233,8 +2350,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2282,7 +2401,7 @@
 
             <div class="card-price-row">
                 <div class="price">$4,000</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2294,7 +2413,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1QefYQBHL2a4rl7w38KXYFEXIrokHyU35&sz=w1200" class="modal-art-img" alt="Mona Lisa">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1QefYQBHL2a4rl7w38KXYFEXIrokHyU35&sz=w1200" data-alt="Mona Lisa" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1QefYQBHL2a4rl7w38KXYFEXIrokHyU35&sz=w1200" class="modal-art-img" alt="Mona Lisa">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2302,7 +2423,7 @@
                         <div class="artwork-title">Mona Lisa</div>
                         <div class="modal-price-row">
                             <div class="price">$4,000</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2314,8 +2435,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2363,7 +2486,7 @@
 
             <div class="card-price-row">
                 <div class="price">$1,100</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2375,7 +2498,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1P9P_xCcEZuTi7zuA3KkU-rlSMf5oThVN&sz=w1200" class="modal-art-img" alt="Liberty Head II on Blends">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1P9P_xCcEZuTi7zuA3KkU-rlSMf5oThVN&sz=w1200" data-alt="Liberty Head II on Blends" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1P9P_xCcEZuTi7zuA3KkU-rlSMf5oThVN&sz=w1200" class="modal-art-img" alt="Liberty Head II on Blends">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2383,7 +2508,7 @@
                         <div class="artwork-title">Liberty Head II on Blends</div>
                         <div class="modal-price-row">
                             <div class="price">$1,100</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2395,8 +2520,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2444,7 +2571,7 @@
 
             <div class="card-price-row">
                 <div class="price">$1,000</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2456,7 +2583,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1pegSWGzu-BLwpNBp4p68yxrpkpMmM-tE&sz=w1200" class="modal-art-img" alt="Mini Red Rose">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1pegSWGzu-BLwpNBp4p68yxrpkpMmM-tE&sz=w1200" data-alt="Mini Red Rose" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1pegSWGzu-BLwpNBp4p68yxrpkpMmM-tE&sz=w1200" class="modal-art-img" alt="Mini Red Rose">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2464,7 +2593,7 @@
                         <div class="artwork-title">Mini Red Rose</div>
                         <div class="modal-price-row">
                             <div class="price">$1,000</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2476,8 +2605,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2525,7 +2656,7 @@
 
             <div class="card-price-row">
                 <div class="price">$3,000</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2537,7 +2668,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1Qm4Mh6VJpBIE9ql66Q2akMS85DLulsjl&sz=w1200" class="modal-art-img" alt="Day Dream">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1Qm4Mh6VJpBIE9ql66Q2akMS85DLulsjl&sz=w1200" data-alt="Day Dream" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1Qm4Mh6VJpBIE9ql66Q2akMS85DLulsjl&sz=w1200" class="modal-art-img" alt="Day Dream">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2545,7 +2678,7 @@
                         <div class="artwork-title">Day Dream</div>
                         <div class="modal-price-row">
                             <div class="price">$3,000</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2557,8 +2690,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2606,7 +2741,7 @@
 
             <div class="card-price-row">
                 <div class="price">$3,000</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2618,7 +2753,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1_rm097VDwuX0qIX4icTNW1b7ekVEXq8S&sz=w1200" class="modal-art-img" alt="Day Dream">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1_rm097VDwuX0qIX4icTNW1b7ekVEXq8S&sz=w1200" data-alt="Day Dream" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1_rm097VDwuX0qIX4icTNW1b7ekVEXq8S&sz=w1200" class="modal-art-img" alt="Day Dream">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2626,7 +2763,7 @@
                         <div class="artwork-title">Day Dream</div>
                         <div class="modal-price-row">
                             <div class="price">$3,000</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2638,8 +2775,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2687,7 +2826,7 @@
 
             <div class="card-price-row">
                 <div class="price">$3,000</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2699,7 +2838,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1bCF8yT7Ib8vwL4QeiqG7fBf_OtybZeXd&sz=w1200" class="modal-art-img" alt="Day Dream">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1bCF8yT7Ib8vwL4QeiqG7fBf_OtybZeXd&sz=w1200" data-alt="Day Dream" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1bCF8yT7Ib8vwL4QeiqG7fBf_OtybZeXd&sz=w1200" class="modal-art-img" alt="Day Dream">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2707,7 +2848,7 @@
                         <div class="artwork-title">Day Dream</div>
                         <div class="modal-price-row">
                             <div class="price">$3,000</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2719,8 +2860,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2768,7 +2911,7 @@
 
             <div class="card-price-row">
                 <div class="price">$1,100</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2780,7 +2923,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1uAEERj3yTp3lKzlwrmHthw_lX18rE-Tc&sz=w1200" class="modal-art-img" alt="The Pink Heart">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1uAEERj3yTp3lKzlwrmHthw_lX18rE-Tc&sz=w1200" data-alt="The Pink Heart" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1uAEERj3yTp3lKzlwrmHthw_lX18rE-Tc&sz=w1200" class="modal-art-img" alt="The Pink Heart">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2788,7 +2933,7 @@
                         <div class="artwork-title">The Pink Heart</div>
                         <div class="modal-price-row">
                             <div class="price">$1,100</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2800,8 +2945,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2849,7 +2996,7 @@
 
             <div class="card-price-row">
                 <div class="price">$1,100</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2861,7 +3008,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1d0AZFUOoo1dwdFlqEQr8aKOJfgzJZisT&sz=w1200" class="modal-art-img" alt="Neon Peace, Love and Happiness">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1d0AZFUOoo1dwdFlqEQr8aKOJfgzJZisT&sz=w1200" data-alt="Neon Peace, Love and Happiness" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1d0AZFUOoo1dwdFlqEQr8aKOJfgzJZisT&sz=w1200" class="modal-art-img" alt="Neon Peace, Love and Happiness">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2869,7 +3018,7 @@
                         <div class="artwork-title">Neon Peace, Love and Happiness</div>
                         <div class="modal-price-row">
                             <div class="price">$1,100</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2881,8 +3030,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -2930,7 +3081,7 @@
 
             <div class="card-price-row">
                 <div class="price">$1,800</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -2942,7 +3093,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1eAFlFUyp05RUuWzn_TYSieUrUFTF9ILh&sz=w1200" class="modal-art-img" alt="Libery Head II Collage (Large)">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1eAFlFUyp05RUuWzn_TYSieUrUFTF9ILh&sz=w1200" data-alt="Libery Head II Collage (Large)" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1eAFlFUyp05RUuWzn_TYSieUrUFTF9ILh&sz=w1200" class="modal-art-img" alt="Libery Head II Collage (Large)">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -2950,7 +3103,7 @@
                         <div class="artwork-title">Libery Head II Collage (Large)</div>
                         <div class="modal-price-row">
                             <div class="price">$1,800</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -2962,8 +3115,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -3011,7 +3166,7 @@
 
             <div class="card-price-row">
                 <div class="price">$2,200</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -3023,7 +3178,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1aDZF0bcZAFlMRwIsUHvBkf3TqPVe_srY&sz=w1200" class="modal-art-img" alt="Edge of Truth">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1aDZF0bcZAFlMRwIsUHvBkf3TqPVe_srY&sz=w1200" data-alt="Edge of Truth" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1aDZF0bcZAFlMRwIsUHvBkf3TqPVe_srY&sz=w1200" class="modal-art-img" alt="Edge of Truth">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -3031,7 +3188,7 @@
                         <div class="artwork-title">Edge of Truth</div>
                         <div class="modal-price-row">
                             <div class="price">$2,200</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -3043,8 +3200,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -3092,7 +3251,7 @@
 
             <div class="card-price-row">
                 <div class="price">$2,000</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -3104,7 +3263,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=160IXwbuy0C6qcZ4pFNMrwcp41ahStEHa&sz=w1200" class="modal-art-img" alt="Aquarius Beluga Hope">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=160IXwbuy0C6qcZ4pFNMrwcp41ahStEHa&sz=w1200" data-alt="Aquarius Beluga Hope" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=160IXwbuy0C6qcZ4pFNMrwcp41ahStEHa&sz=w1200" class="modal-art-img" alt="Aquarius Beluga Hope">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -3112,7 +3273,7 @@
                         <div class="artwork-title">Aquarius Beluga Hope</div>
                         <div class="modal-price-row">
                             <div class="price">$2,000</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -3124,8 +3285,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Nathaniel Jones</span>
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Nathaniel Jones</span>
+                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -3173,7 +3336,7 @@
 
             <div class="card-price-row">
                 <div class="price">$350</div>
-                <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                <span class="badge artwork-category-badge card-badge category-limited">Limited Edition</span>
             </div>
 
             <div class="card-actions">
@@ -3185,7 +3348,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1_C3Dyu3vfPLhQBM-f1Xn-QBqi2c3TQn8&sz=w1200" class="modal-art-img" alt="Desert Calm">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1_C3Dyu3vfPLhQBM-f1Xn-QBqi2c3TQn8&sz=w1200" data-alt="Desert Calm" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1_C3Dyu3vfPLhQBM-f1Xn-QBqi2c3TQn8&sz=w1200" class="modal-art-img" alt="Desert Calm">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -3193,7 +3358,7 @@
                         <div class="artwork-title">Desert Calm</div>
                         <div class="modal-price-row">
                             <div class="price">$350</div>
-                            <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                            <span class="badge artwork-category-badge card-badge category-limited">Limited Edition</span>
                             
                         </div>
                     </div>
@@ -3205,8 +3370,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Guy Scuderi</span>
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Guy Scuderi</span>
+                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -3254,7 +3421,7 @@
 
             <div class="card-price-row">
                 <div class="price">$600</div>
-                <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                <span class="badge artwork-category-badge card-badge category-limited">Limited Edition</span>
             </div>
 
             <div class="card-actions">
@@ -3266,7 +3433,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1CZwVAC3LMz5d_8Ocv8txhyFdJoNpPW5A&sz=w1200" class="modal-art-img" alt="Grape Toast">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1CZwVAC3LMz5d_8Ocv8txhyFdJoNpPW5A&sz=w1200" data-alt="Grape Toast" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1CZwVAC3LMz5d_8Ocv8txhyFdJoNpPW5A&sz=w1200" class="modal-art-img" alt="Grape Toast">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -3274,7 +3443,7 @@
                         <div class="artwork-title">Grape Toast</div>
                         <div class="modal-price-row">
                             <div class="price">$600</div>
-                            <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                            <span class="badge artwork-category-badge card-badge category-limited">Limited Edition</span>
                             
                         </div>
                     </div>
@@ -3286,8 +3455,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Guy Scuderi</span>
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Guy Scuderi</span>
+                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -3335,7 +3506,7 @@
 
             <div class="card-price-row">
                 <div class="price">$1,625</div>
-                <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                <span class="badge artwork-category-badge card-badge category-limited">Limited Edition</span>
             </div>
 
             <div class="card-actions">
@@ -3347,7 +3518,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1q6dpUEejaTem6Sw2LvUq2O2Qj2HG1R3M&sz=w1200" class="modal-art-img" alt="Better World">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1q6dpUEejaTem6Sw2LvUq2O2Qj2HG1R3M&sz=w1200" data-alt="Better World" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1q6dpUEejaTem6Sw2LvUq2O2Qj2HG1R3M&sz=w1200" class="modal-art-img" alt="Better World">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -3355,7 +3528,7 @@
                         <div class="artwork-title">Better World</div>
                         <div class="modal-price-row">
                             <div class="price">$1,625</div>
-                            <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                            <span class="badge artwork-category-badge card-badge category-limited">Limited Edition</span>
                             
                         </div>
                     </div>
@@ -3367,8 +3540,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Guy Scuderi</span>
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Guy Scuderi</span>
+                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -3416,7 +3591,7 @@
 
             <div class="card-price-row">
                 <div class="price">$625</div>
-                <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                <span class="badge artwork-category-badge card-badge category-limited">Limited Edition</span>
             </div>
 
             <div class="card-actions">
@@ -3428,7 +3603,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1pSfbmpm2VP6esbSUWvArJW8edMyh3fTZ&sz=w1200" class="modal-art-img" alt="Ray of Hope">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1pSfbmpm2VP6esbSUWvArJW8edMyh3fTZ&sz=w1200" data-alt="Ray of Hope" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1pSfbmpm2VP6esbSUWvArJW8edMyh3fTZ&sz=w1200" class="modal-art-img" alt="Ray of Hope">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -3436,7 +3613,7 @@
                         <div class="artwork-title">Ray of Hope</div>
                         <div class="modal-price-row">
                             <div class="price">$625</div>
-                            <span class="badge artwork-category-badge card-badge">Limited Edition</span>
+                            <span class="badge artwork-category-badge card-badge category-limited">Limited Edition</span>
                             
                         </div>
                     </div>
@@ -3448,8 +3625,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Guy Scuderi</span>
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Guy Scuderi</span>
+                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -3497,7 +3676,7 @@
 
             <div class="card-price-row">
                 <div class="price">$2,250</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -3509,7 +3688,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=13BHVjT0r474qkCyDVdWFr1YPJEPFw0D-&sz=w1200" class="modal-art-img" alt="New Beginnings">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=13BHVjT0r474qkCyDVdWFr1YPJEPFw0D-&sz=w1200" data-alt="New Beginnings" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=13BHVjT0r474qkCyDVdWFr1YPJEPFw0D-&sz=w1200" class="modal-art-img" alt="New Beginnings">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -3517,7 +3698,7 @@
                         <div class="artwork-title">New Beginnings</div>
                         <div class="modal-price-row">
                             <div class="price">$2,250</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -3529,8 +3710,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Guy Scuderi</span>
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Guy Scuderi</span>
+                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -3578,7 +3761,7 @@
 
             <div class="card-price-row">
                 <div class="price">$400</div>
-                <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
             </div>
 
             <div class="card-actions">
@@ -3590,7 +3773,9 @@
         <template class="modal-content-template">
             <div class="modal-content-inner">
                 <div class="modal-image-wrap">
-                    <img src="https://drive.google.com/thumbnail?id=1eANxjAFtsbrvyZFGvcMx99wjYKV0lB9E&sz=w1200" class="modal-art-img" alt="Test">
+                    <button class="image-open modal-image-zoom" type="button" data-fullsrc="https://drive.google.com/thumbnail?id=1eANxjAFtsbrvyZFGvcMx99wjYKV0lB9E&sz=w1200" data-alt="Test" aria-label="Open artwork image">
+                        <img src="https://drive.google.com/thumbnail?id=1eANxjAFtsbrvyZFGvcMx99wjYKV0lB9E&sz=w1200" class="modal-art-img" alt="Test">
+                    </button>
                 </div>
                 <div class="modal-info">
                     <div class="modal-header">
@@ -3598,7 +3783,7 @@
                         <div class="artwork-title">Test</div>
                         <div class="modal-price-row">
                             <div class="price">$400</div>
-                            <span class="badge artwork-category-badge card-badge">Unique/Original</span>
+                            <span class="badge artwork-category-badge card-badge category-unique">Unique/Original</span>
                             
                         </div>
                     </div>
@@ -3610,8 +3795,10 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <span class="seller-name">Guy Scuderi</span>
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <div class="modal-seller-row">
+                    <span class="seller-name">Guy Scuderi</span>
+                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                </div>
             </div>
         
 
@@ -3621,6 +3808,11 @@
         </template>
     </article>
     
+                <div class="empty-state" id="emptyState" hidden>
+                    <h3 class="empty-state-title">No listings match your filters</h3>
+                    <p class="empty-state-message">Try clearing or adjusting your filters above.</p>
+                    <button class="empty-state-clear" id="clearFiltersFromEmpty" type="button">Clear all filters</button>
+                </div>
             </div>
         </section>
     </div>
@@ -3665,6 +3857,8 @@
         const resultCount = document.getElementById("resultCount");
         const savedCount = document.getElementById("savedCount");
         const backToTop = document.getElementById("backToTop");
+        const emptyState = document.getElementById("emptyState");
+        const clearFiltersFromEmpty = document.getElementById("clearFiltersFromEmpty");
 
         const lightbox = document.getElementById("lightbox");
         const lightboxImage = document.getElementById("lightboxImage");
@@ -3819,6 +4013,18 @@
 
             sortCards(visibleCards);
             resultCount.textContent = `${visibleCards.length} listing${visibleCards.length === 1 ? "" : "s"} shown`;
+            emptyState.hidden = visibleCards.length > 0;
+        }
+
+        function clearAllFilters() {
+            searchInput.value = "";
+            savedFilter.value = "";
+            sellerFilter.value = "";
+            artistFilter.value = "";
+            categoryFilter.value = "";
+            priceFilter.value = "";
+            sortFilter.value = "newest";
+            applyFilters();
         }
 
 
@@ -3841,7 +4047,10 @@
             lightbox.setAttribute("aria-hidden", "true");
             lightboxImage.src = "";
             lightboxImage.alt = "";
-            document.body.style.overflow = "";
+            // Don't unlock body scroll if the detail modal is still open behind us.
+            if (!detailModal.classList.contains("is-open")) {
+                document.body.style.overflow = "";
+            }
         }
 
         // === Detail modal ===
@@ -3945,6 +4154,8 @@
             el.addEventListener("input", applyFilters);
             el.addEventListener("change", applyFilters);
         });
+
+        clearFiltersFromEmpty.addEventListener("click", clearAllFilters);
 
         updateSavedButtons();
         applyFilters();
