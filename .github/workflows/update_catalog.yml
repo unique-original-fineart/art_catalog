@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: "*/30 * * * *"  # runs every 30 minutes
   workflow_dispatch:       # allows manual trigger
+  repository_dispatch:
+    types: [rebuild-catalog]
 
 permissions:
   contents: write
