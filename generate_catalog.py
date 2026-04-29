@@ -9,6 +9,11 @@ from pathlib import Path
 
 PRICE_DROP_WINDOW_DAYS = 30
 
+# Public domain + assets used to build absolute URLs in social-preview meta tags.
+SITE_URL = "https://canvascircle.art"
+SOCIAL_CARD_PATH = "assets/og-image.png"
+SITE_NAME = "Canvas Circle"
+
 BUYING_GUIDELINES = [
     "Ask for a video of the artwork they are selling and have them state their name and date in the video as well. If they cannot provide you with that video, then do not proceed with the transaction and please report that member to the admin/moderator team.",
     "Ask the admins and moderators if they know of the seller. One of us may be able to provide you with insight. Also ask the seller if they have any sales references of people that you can contact to ask how their transaction went with the seller.",
@@ -329,6 +334,28 @@ def safe_text(value):
     if value is None:
         return ""
     return html.escape(str(value))
+
+
+def build_meta_tags(page_title: str, description: str, url_path: str = "") -> str:
+    """Render Open Graph + Twitter meta tags so URL link previews look right.
+    url_path is a relative path like 'about.html' (or empty for the catalog root)."""
+    full_url = SITE_URL if not url_path else f"{SITE_URL}/{url_path.lstrip('/')}"
+    image_url = f"{SITE_URL}/{SOCIAL_CARD_PATH}"
+    return (
+        f'    <meta name="description" content="{safe_text(description)}">\n'
+        f'    <meta property="og:type" content="website">\n'
+        f'    <meta property="og:site_name" content="{safe_text(SITE_NAME)}">\n'
+        f'    <meta property="og:url" content="{full_url}">\n'
+        f'    <meta property="og:title" content="{safe_text(page_title)}">\n'
+        f'    <meta property="og:description" content="{safe_text(description)}">\n'
+        f'    <meta property="og:image" content="{image_url}">\n'
+        f'    <meta property="og:image:width" content="1200">\n'
+        f'    <meta property="og:image:height" content="630">\n'
+        f'    <meta name="twitter:card" content="summary_large_image">\n'
+        f'    <meta name="twitter:title" content="{safe_text(page_title)}">\n'
+        f'    <meta name="twitter:description" content="{safe_text(description)}">\n'
+        f'    <meta name="twitter:image" content="{image_url}">'
+    )
 
 
 def extract_drive_file_id(url):
@@ -725,6 +752,12 @@ def generate_guidelines_html(output_path: Path, title: str):
     buying_items = "\n".join(f"<li>{safe_text(item)}</li>" for item in BUYING_GUIDELINES)
     shipping_items = "\n".join(f"<li>{safe_text(item)}</li>" for item in SHIPPING_GUIDELINES)
 
+    meta_tags_html = build_meta_tags(
+        page_title=f"{title} — Buying & Shipping Guidelines",
+        description="Community guidelines for safer payments, smoother transactions, and better shipping when buying or selling on Canvas Circle.",
+        url_path="guidelines.html",
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -732,6 +765,7 @@ def generate_guidelines_html(output_path: Path, title: str):
     <link rel="icon" href="assets/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{safe_text(title)} — Buying & Shipping Guidelines</title>
+{meta_tags_html}
     <style>
         :root {{
             --bg: #f5f1ea;
@@ -945,6 +979,12 @@ def generate_about_html(output_path: Path, title: str):
     index_src = "index.html"
     logo_src = "assets/logo.png"
 
+    meta_tags_html = build_meta_tags(
+        page_title="About Canvas Circle",
+        description="Canvas Circle is a modern art marketplace built for social selling — bringing structure and a centralized catalog to community art resale.",
+        url_path="about.html",
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -952,6 +992,7 @@ def generate_about_html(output_path: Path, title: str):
     <link rel="icon" href="assets/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{safe_text(title)} — About</title>
+{meta_tags_html}
     <style>
         :root {{
             --bg: #f5f1ea;
@@ -1245,6 +1286,12 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
     guidelines_src = "guidelines.html"
     about_src = "about.html"
 
+    meta_tags_html = build_meta_tags(
+        page_title=title,
+        description="Canvas Circle is a modern art marketplace built for social selling. Browse curated original and limited-edition artwork from the community.",
+        url_path="",
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1252,6 +1299,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
     <link rel="icon" href="assets/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{safe_text(title)}</title>
+{meta_tags_html}
     <style>
         :root {{
             --bg: #f5f1ea;
