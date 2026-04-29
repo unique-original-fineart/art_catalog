@@ -484,6 +484,7 @@ def build_card(row, image_src):
     is_pending = status_lower == "pending"
 
     seller_profile_url = (row.get("seller_profile_url") or "").strip()
+    seller_email_raw = (row.get("seller_email") or "").strip()
     listing_id = html.escape(str(listing_id_raw))
 
     full_image_src = drive_thumbnail_url(row.get("source_image_url"), "w1200")
@@ -575,15 +576,30 @@ def build_card(row, image_src):
     modal_specs_html = build_specs(row)
     modal_notes_html = build_notes(row)
 
+    # Email Seller button — only renders in the modal, not on the card.
+    email_button_html = ""
+    if seller_email_raw and not is_sold:
+        safe_email = html.escape(seller_email_raw, quote=True)
+        email_button_html = (
+            f'<a href="mailto:{safe_email}" class="email-seller-button">'
+            f'Email Seller</a>'
+        )
+
     modal_seller_html = ""
     if seller_name_raw:
+        modal_seller_actions = ""
+        if contact_button_html or email_button_html:
+            modal_seller_actions = f"""
+                    <div class="modal-seller-actions">
+                        {contact_button_html}
+                        {email_button_html}
+                    </div>
+            """
         modal_seller_html = f"""
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">{seller_name}</span>
-                    {contact_button_html}
-                </div>
+                <span class="seller-name">{seller_name}</span>
+                {modal_seller_actions}
             </div>
         """
 
@@ -925,6 +941,289 @@ def generate_guidelines_html(output_path: Path, title: str):
 </html>"""
 
 
+def generate_about_html(output_path: Path, title: str):
+    index_src = "index.html"
+    logo_src = "assets/logo.png"
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="assets/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{safe_text(title)} — About</title>
+    <style>
+        :root {{
+            --bg: #f5f1ea;
+            --card: rgba(255,255,255,0.86);
+            --text: #1f1a17;
+            --muted: #6f675e;
+            --line: #dbd1c4;
+            --shadow-soft: 0 8px 22px rgba(35, 27, 20, 0.05);
+        }}
+
+        * {{
+            box-sizing: border-box;
+        }}
+
+        body {{
+            margin: 0;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(255,255,255,0.7), transparent 35%),
+                linear-gradient(180deg, #f7f3ed 0%, #f2ece3 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.6;
+        }}
+
+        .page {{
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 32px 20px 80px;
+        }}
+
+        .hero {{
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 24px;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 28px;
+        }}
+
+        .brand-logo {{
+            width: 108px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 8px 18px rgba(0,0,0,0.08));
+        }}
+
+        .hero-copy h1 {{
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(30px, 4vw, 48px);
+            line-height: 1.02;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }}
+
+        .hero-sub {{
+            margin-top: 14px;
+            color: var(--muted);
+            max-width: 720px;
+            font-size: 16px;
+        }}
+
+        .hero-links {{
+            margin-top: 14px;
+        }}
+
+        .hero-link {{
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(31, 26, 23, 0.25);
+        }}
+
+        .hero-link:hover {{
+            border-bottom-color: rgba(31, 26, 23, 0.65);
+        }}
+
+        .section {{
+            background: var(--card);
+            border: 1px solid rgba(219, 209, 196, 0.85);
+            border-radius: 22px;
+            padding: 24px 28px 26px;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 20px;
+        }}
+
+        .section h2 {{
+            margin: 0 0 16px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 30px;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }}
+
+        .section p {{
+            margin: 0 0 14px;
+            font-size: 16px;
+            line-height: 1.65;
+        }}
+
+        .section p.lede {{
+            font-size: 18px;
+            color: var(--text);
+        }}
+
+        .section p:last-child {{
+            margin-bottom: 0;
+        }}
+
+        .section ul {{
+            margin: 14px 0 18px;
+            padding-left: 22px;
+        }}
+
+        .section li {{
+            margin-bottom: 8px;
+            font-size: 16px;
+            line-height: 1.55;
+        }}
+
+        .feature-list {{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 16px;
+        }}
+
+        .feature {{
+            background: rgba(255,255,255,0.6);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 16px 18px;
+        }}
+
+        .feature h3 {{
+            margin: 0 0 6px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }}
+
+        .feature p {{
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--muted);
+        }}
+
+        .footer-link {{
+            margin-top: 28px;
+            text-align: center;
+        }}
+
+        .footer-link a {{
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(31, 26, 23, 0.25);
+        }}
+
+        .footer-link a:hover {{
+            border-bottom-color: rgba(31, 26, 23, 0.65);
+        }}
+
+        @media (max-width: 720px) {{
+            .page {{
+                padding: 24px 16px 70px;
+            }}
+
+            .hero {{
+                grid-template-columns: 1fr;
+                gap: 14px;
+                align-items: start;
+            }}
+
+            .brand-logo {{
+                width: 78px;
+            }}
+
+            .section {{
+                padding: 20px 18px 22px;
+            }}
+
+            .section h2 {{
+                font-size: 26px;
+            }}
+
+            .feature-list {{
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="hero">
+            <div>
+                <img src="{logo_src}" class="brand-logo" alt="Canvas Circle">
+            </div>
+            <div class="hero-copy">
+                <h1>About Canvas Circle</h1>
+                <div class="hero-sub">
+                    A modern art marketplace built for social selling.
+                </div>
+                <div class="hero-links">
+                    <a class="hero-link" href="{index_src}">Back to catalog</a>
+                </div>
+            </div>
+        </header>
+
+        <section class="section">
+            <p class="lede">Canvas Circle is a modern art marketplace built for social selling.</p>
+            <p>Today, a large portion of art resale happens across Facebook groups and online communities. While these spaces are active and valuable, they're often unstructured. Listings can be inconsistent, incomplete, and difficult to navigate. Important details get lost, and both buyers and sellers spend unnecessary time managing the process.</p>
+            <p>There's also the constant pressure to stay visible by bumping posts, reposting listings, and competing with ever-changing algorithms just to be seen.</p>
+            <p><strong>Canvas Circle brings structure to that environment.</strong></p>
+            <p>It provides a simple, consistent way to create clean, organized listings that include all the information buyers actually need without unnecessary clutter. Instead of relying on individual posts, listings live in a centralized online catalog. Sellers can direct buyers to their listings through a clean, filterable interface — making it easier for buyers to browse, compare, and engage without the noise of social feeds.</p>
+            <p>Canvas Circle acts as a marketplace, but transactions stay direct. We don't process payments, handle logistics, or sit in the middle of transactions. Instead, we provide the infrastructure that helps buyers and sellers connect more efficiently, while maintaining the flexibility and independence of social selling.</p>
+        </section>
+
+        <section class="section">
+            <h2>Why Canvas Circle Exists</h2>
+            <p><em>Better listings lead to better outcomes.</em></p>
+            <p>When listings are clear, complete, and consistent:</p>
+            <ul>
+                <li>Buyers can quickly find relevant works</li>
+                <li>Sellers receive more serious inquiries</li>
+                <li>Less time is spent reformatting, reposting, and competing for visibility</li>
+            </ul>
+            <p>Canvas Circle reduces the friction of social selling by replacing scattered posts with a structured, centralized experience.</p>
+        </section>
+
+        <section class="section">
+            <h2>What Makes Canvas Circle Different</h2>
+            <p>Canvas Circle is designed around how art is actually bought and sold today.</p>
+            <div class="feature-list">
+                <div class="feature">
+                    <h3>Structured Listings</h3>
+                    <p>Every listing follows a clean, consistent format that highlights what matters most.</p>
+                </div>
+                <div class="feature">
+                    <h3>Centralized Catalog</h3>
+                    <p>All listings live in one place, making it easy for buyers to browse and filter.</p>
+                </div>
+                <div class="feature">
+                    <h3>Built for Social Use</h3>
+                    <p>Sellers can easily direct buyers to their listings without relying on constant reposting.</p>
+                </div>
+                <div class="feature">
+                    <h3>Direct Transactions</h3>
+                    <p>Buyers and sellers connect directly, with no fees or intermediaries.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>A Better Way to Sell Art Online</h2>
+            <p>Canvas Circle doesn't replace social platforms — it complements them.</p>
+            <p>By combining structured listings with a centralized catalog, it transforms fragmented, feed-based selling into a more organized, efficient, and professional marketplace experience.</p>
+        </section>
+
+        <div class="footer-link">
+            <a href="{index_src}">Return to the art catalog</a>
+        </div>
+    </div>
+</body>
+</html>"""
+
+
 def generate_html(data, images_path: Path, output_path: Path, title, month_label):
     stats = summary_stats(data)
 
@@ -944,6 +1243,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
     )
     logo_src = "https://raw.githubusercontent.com/unique-original-fineart/art_catalog/main/assets/logo.png"
     guidelines_src = "guidelines.html"
+    about_src = "about.html"
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -1072,6 +1372,12 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
 
         .hero-link:hover {{
             border-bottom-color: rgba(31, 26, 23, 0.65);
+        }}
+
+        .hero-link-divider {{
+            color: var(--muted);
+            font-size: 14px;
+            margin: 0 4px;
         }}
 
         .stats-bar {{
@@ -2016,26 +2322,42 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             text-transform: uppercase;
         }}
 
-        .modal-seller-row {{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }}
-
         .modal-seller .seller-name {{
             font-size: 18px;
             font-weight: 700;
             line-height: 1.2;
             color: var(--text);
-            min-width: 0;
-            flex: 1 1 auto;
         }}
 
-        .modal-seller-row .contact-seller-button {{
+        .modal-seller-actions {{
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }}
+
+        .modal-seller-actions .contact-seller-button {{
             margin-top: 0;
-            flex-shrink: 0;
+        }}
+
+        .email-seller-button {{
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+        }}
+
+        .email-seller-button:hover {{
+            transform: translateY(-1px);
+            background: white;
+            border-color: rgba(31, 26, 23, 0.4);
         }}
 
 
@@ -2100,20 +2422,28 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             }}
 
             .stats-bar {{
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-                width: 100%;
-                padding: 16px 18px;
+                padding: 12px 14px;
+                margin-top: 18px;
             }}
 
             .stat-chip {{
-                padding: 0;
+                padding: 0 10px;
+                gap: 4px;
+            }}
+
+            .stat-chip-label {{
+                font-size: 10px;
+                letter-spacing: 0.1em;
+            }}
+
+            .stat-chip-value {{
+                font-size: 22px;
             }}
 
             .stat-divider {{
-                width: 100%;
-                height: 1px;
+                width: 1px;
+                height: auto;
+                align-self: stretch;
             }}
 
             .filters {{
@@ -2303,6 +2633,8 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             </div>
 
             <div class="hero-links centered-link">
+                <a class="hero-link" href="{about_src}">About</a>
+                <span class="hero-link-divider"> · </span>
                 <a class="hero-link" href="{guidelines_src}">Buying/Shipping Guidelines</a>
             </div>
 
@@ -2773,15 +3105,24 @@ def main():
         title=args.title,
     )
 
+    about_html = generate_about_html(
+        output_path=output_path,
+        title=args.title,
+    )
+
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(html_text, encoding="utf-8")
 
     guidelines_path = output_path.parent / "guidelines.html"
     guidelines_path.write_text(guidelines_html, encoding="utf-8")
 
+    about_path = output_path.parent / "about.html"
+    about_path.write_text(about_html, encoding="utf-8")
+
     print(f"Loaded {len(data)} approved public listings.")
     print(f"Catalog generated: {output_path}")
     print(f"Guidelines generated: {guidelines_path}")
+    print(f"About generated: {about_path}")
 
 
 if __name__ == "__main__":
