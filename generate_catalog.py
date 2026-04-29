@@ -1285,6 +1285,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
     logo_src = "https://raw.githubusercontent.com/unique-original-fineart/art_catalog/main/assets/logo.png"
     guidelines_src = "guidelines.html"
     about_src = "about.html"
+    form_src = "https://docs.google.com/forms/d/e/1FAIpQLSfr5B0TPSlUfU-oeGcpi8Q8oLS-ePqVU4q_8mFrOPCHy5jc3Q/viewform?usp=header"
 
     meta_tags_html = build_meta_tags(
         page_title=title,
@@ -2684,6 +2685,8 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                 <a class="hero-link" href="{about_src}">About</a>
                 <span class="hero-link-divider"> · </span>
                 <a class="hero-link" href="{guidelines_src}">Buying/Shipping Guidelines</a>
+                <span class="hero-link-divider"> · </span>
+                <a class="hero-link" href="{form_src}" target="_blank" rel="noopener noreferrer">Submit a Listing</a>
             </div>
 
             <div class="stats-bar">
