@@ -127,6 +127,12 @@
             border-bottom-color: rgba(31, 26, 23, 0.65);
         }
 
+        .hero-link-divider {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 0 4px;
+        }
+
         .stats-bar {
             display: flex;
             align-items: center;
@@ -1069,26 +1075,42 @@
             text-transform: uppercase;
         }
 
-        .modal-seller-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
         .modal-seller .seller-name {
             font-size: 18px;
             font-weight: 700;
             line-height: 1.2;
             color: var(--text);
-            min-width: 0;
-            flex: 1 1 auto;
         }
 
-        .modal-seller-row .contact-seller-button {
+        .modal-seller-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .modal-seller-actions .contact-seller-button {
             margin-top: 0;
-            flex-shrink: 0;
+        }
+
+        .email-seller-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+        }
+
+        .email-seller-button:hover {
+            transform: translateY(-1px);
+            background: white;
+            border-color: rgba(31, 26, 23, 0.4);
         }
 
 
@@ -1153,20 +1175,28 @@
             }
 
             .stats-bar {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-                width: 100%;
-                padding: 16px 18px;
+                padding: 12px 14px;
+                margin-top: 18px;
             }
 
             .stat-chip {
-                padding: 0;
+                padding: 0 10px;
+                gap: 4px;
+            }
+
+            .stat-chip-label {
+                font-size: 10px;
+                letter-spacing: 0.1em;
+            }
+
+            .stat-chip-value {
+                font-size: 22px;
             }
 
             .stat-divider {
-                width: 100%;
-                height: 1px;
+                width: 1px;
+                height: auto;
+                align-self: stretch;
             }
 
             .filters {
@@ -1356,6 +1386,8 @@
             </div>
 
             <div class="hero-links centered-link">
+                <a class="hero-link" href="about.html">About</a>
+                <span class="hero-link-divider"> · </span>
                 <a class="hero-link" href="guidelines.html">Buying/Shipping Guidelines</a>
             </div>
 
@@ -1500,10 +1532,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Guy Scuderi</span>
-                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Guy Scuderi</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:gjscuderi@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -1585,10 +1620,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -1670,10 +1708,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Gino DiFilippo Jr.</span>
-                    <a href="https://www.facebook.com/ginodifilippojr" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Gino DiFilippo Jr.</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/ginodifilippojr" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        
+                    </div>
+            
             </div>
         
 
@@ -1755,10 +1796,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -1840,10 +1884,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -1925,10 +1972,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2010,10 +2060,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2095,10 +2148,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2180,10 +2236,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2265,10 +2324,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2350,10 +2412,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2435,10 +2500,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2520,10 +2588,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2605,10 +2676,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2690,10 +2764,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2775,10 +2852,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2860,10 +2940,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -2945,10 +3028,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -3030,10 +3116,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -3115,10 +3204,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -3200,10 +3292,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -3285,10 +3380,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Nathaniel Jones</span>
-                    <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Nathaniel Jones</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -3370,10 +3468,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Guy Scuderi</span>
-                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Guy Scuderi</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:Gjscuderi@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -3455,10 +3556,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Guy Scuderi</span>
-                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Guy Scuderi</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:Gjscuderi@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -3540,10 +3644,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Guy Scuderi</span>
-                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Guy Scuderi</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:Gjscuderi@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -3625,10 +3732,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Guy Scuderi</span>
-                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Guy Scuderi</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:Gjscuderi@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
@@ -3710,10 +3820,13 @@
                     
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
-                <div class="modal-seller-row">
-                    <span class="seller-name">Guy Scuderi</span>
-                    <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
-                </div>
+                <span class="seller-name">Guy Scuderi</span>
+                
+                    <div class="modal-seller-actions">
+                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="mailto:gjscuderi@gmail.com" class="email-seller-button">Email Seller</a>
+                    </div>
+            
             </div>
         
 
