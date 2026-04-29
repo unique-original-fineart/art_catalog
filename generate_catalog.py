@@ -1560,7 +1560,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
 
         .grid {{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 28px;
         }}
 
