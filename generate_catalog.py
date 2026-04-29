@@ -1429,6 +1429,10 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             margin: 0 4px;
         }}
 
+        .hero-link-short {{
+            display: none;
+        }}
+
         .stats-bar {{
             display: flex;
             align-items: center;
@@ -1543,6 +1547,25 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             gap: 18px;
             margin-bottom: 18px;
             flex-wrap: wrap;
+        }}
+
+        .clear-filters-button {{
+            appearance: none;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.92);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease;
+            white-space: nowrap;
+        }}
+
+        .clear-filters-button:hover {{
+            background: white;
+            border-color: rgba(31,26,23,0.4);
         }}
 
         .result-meta {{
@@ -2446,6 +2469,14 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                 margin-bottom: 24px;
             }}
 
+            .hero-link-full {{
+                display: none;
+            }}
+
+            .hero-link-short {{
+                display: inline;
+            }}
+
             .hero-top {{
                 grid-template-columns: 1fr;
                 gap: 14px;
@@ -2684,7 +2715,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             <div class="hero-links centered-link">
                 <a class="hero-link" href="{about_src}">About</a>
                 <span class="hero-link-divider"> · </span>
-                <a class="hero-link" href="{guidelines_src}">Buying/Shipping Guidelines</a>
+                <a class="hero-link" href="{guidelines_src}"><span class="hero-link-full">Buying/Shipping Guidelines</span><span class="hero-link-short">Guidelines</span></a>
                 <span class="hero-link-divider"> · </span>
                 <a class="hero-link" href="{form_src}" target="_blank" rel="noopener noreferrer">Submit a Listing</a>
             </div>
@@ -2754,7 +2785,9 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                     <div class="result-count" id="resultCount"></div>
                     <div class="saved-count" id="savedCount"></div>
                 </div>
-                
+                <button class="clear-filters-button" id="clearAllFiltersButton" type="button">
+                    Clear all filters
+                </button>
             </div>
 
             <div class="grid" id="catalogGrid">
@@ -3107,6 +3140,11 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
         }});
 
         clearFiltersFromEmpty.addEventListener("click", clearAllFilters);
+
+        const clearAllFiltersButton = document.getElementById("clearAllFiltersButton");
+        if (clearAllFiltersButton) {{
+            clearAllFiltersButton.addEventListener("click", clearAllFilters);
+        }}
 
         updateSavedButtons();
         applyFilters();
