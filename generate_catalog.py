@@ -412,10 +412,12 @@ def build_badges(row):
     if shipping is True:
         badges.append('<span class="badge">Shipping Included</span>')
     elif shipping is False:
-        badges.append('<span class="badge badge-muted">Shipping Extra</span>')
+        badges.append('<span class="badge badge-warn">Shipping Extra</span>')
 
     if coa is True:
         badges.append('<span class="badge">COA Included</span>')
+    elif coa is False:
+        badges.append('<span class="badge badge-warn">No COA</span>')
 
     if category:
         badges.append(f'<span class="badge artwork-category-badge">{safe_text(category)}</span>')
@@ -595,9 +597,11 @@ def build_card(row, image_src):
     if shipping is True:
         modal_badge_parts.append('<span class="badge">Shipping Included</span>')
     elif shipping is False:
-        modal_badge_parts.append('<span class="badge badge-muted">Shipping Extra</span>')
+        modal_badge_parts.append('<span class="badge badge-warn">Shipping Extra</span>')
     if coa is True:
         modal_badge_parts.append('<span class="badge">COA Included</span>')
+    elif coa is False:
+        modal_badge_parts.append('<span class="badge badge-warn">No COA</span>')
     modal_badges_html = "".join(modal_badge_parts)
 
     modal_specs_html = build_specs(row)
@@ -1754,6 +1758,12 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
 
         .badge-muted {{
             color: var(--muted);
+        }}
+
+        .badge-warn {{
+            background: #fbf3df;
+            color: #715814;
+            border-color: #ecdca8;
         }}
 
         .artwork-category-badge {{
