@@ -10,6 +10,15 @@ on:
 permissions:
   contents: write
 
+# Only one catalog build can be running at a time. If a new dispatch (or
+# scheduled / manual run) arrives while a build is still in progress, the
+# in-flight one is cancelled and the new run takes over. This stops the
+# "two builds racing on the gh-pages push" failures we'd see when many
+# listings were approved in quick succession.
+concurrency:
+  group: catalog-rebuild
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
