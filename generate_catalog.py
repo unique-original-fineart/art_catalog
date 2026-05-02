@@ -50,6 +50,7 @@ INPUT_TO_OUTPUT = {
     "Upload Artwork Image (ONE image per submission)": "source_image_url",
     "Link to Seller Facebook Profile (Make sure your link works before submitting as this link will be on each of your listings for potential buyers to contact you!)": "seller_profile_url",
     "Seller Email Address (gmail preferred)": "seller_email",
+    "seller_location": "seller_location",
 
     "listing_id": "listing_id",
     "image_file": "image_file",
@@ -75,6 +76,7 @@ INPUT_TO_OUTPUT = {
     "shipping_included": "shipping_included",
     "certificate_of_authenticity_included": "certificate_of_authenticity_included",
     "seller_notes": "seller_notes",
+    "seller_location": "seller_location",
 }
 
 OUTPUT_COLUMNS = [
@@ -91,6 +93,7 @@ OUTPUT_COLUMNS = [
     "shipping_included",
     "certificate_of_authenticity_included",
     "seller_notes",
+    "seller_location",
     "image_file",
     "source_image_url",
     "processed_at",
@@ -616,6 +619,16 @@ def build_card(row, image_src):
             f'Email Seller</a>'
         )
 
+    seller_location_raw = (row.get("seller_location") or "").strip()
+    seller_location_html = ""
+    if seller_location_raw:
+        seller_location_html = (
+            f'<div class="seller-location">'
+            f'<span class="location-label">Location:</span> '
+            f'<span class="location-value">{safe_text(seller_location_raw)}</span>'
+            f'</div>'
+        )
+
     modal_seller_html = ""
     if seller_name_raw:
         modal_seller_actions = ""
@@ -630,9 +643,13 @@ def build_card(row, image_src):
             <div class="modal-seller">
                 <span class="seller-label">Seller</span>
                 <span class="seller-name">{seller_name}</span>
+                {seller_location_html}
                 {modal_seller_actions}
             </div>
         """
+    elif seller_location_html:
+        # Seller name missing but location present — still surface the location.
+        modal_seller_html = f'<div class="modal-seller">{seller_location_html}</div>'
 
     searchable_text = " ".join(
         [
@@ -2409,6 +2426,17 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             font-weight: 700;
             line-height: 1.2;
             color: var(--text);
+        }}
+
+        .modal-seller .seller-location {{
+            font-size: 14px;
+            color: var(--text);
+        }}
+
+        .modal-seller .seller-location .location-label {{
+            color: var(--muted);
+            font-weight: 600;
+            margin-right: 4px;
         }}
 
         .modal-seller-actions {{
