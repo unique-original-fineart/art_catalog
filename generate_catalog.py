@@ -787,6 +787,11 @@ def generate_guidelines_html(output_path: Path, title: str):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{safe_text(title)} — Buying & Shipping Guidelines</title>
 {meta_tags_html}
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <meta name="theme-color" content="#1f1a17">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Canvas Circle">
     <style>
         :root {{
             --bg: #f5f1ea;
@@ -1014,6 +1019,11 @@ def generate_about_html(output_path: Path, title: str):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{safe_text(title)} — About</title>
 {meta_tags_html}
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <meta name="theme-color" content="#1f1a17">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Canvas Circle">
     <style>
         :root {{
             --bg: #f5f1ea;
@@ -1322,6 +1332,14 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{safe_text(title)}</title>
 {meta_tags_html}
+    <!-- Progressive Web App: install to home screen on iOS / Android. -->
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <meta name="theme-color" content="#1f1a17">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Canvas Circle">
     <style>
         :root {{
             --bg: #f5f1ea;
@@ -1548,6 +1566,49 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             color: var(--text);
             font-size: 14px;
             box-shadow: var(--shadow-soft);
+        }}
+
+        /* Price range filter — two number inputs sharing a single rounded field. */
+        .filters .price-range {{
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0 10px;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.92);
+            box-shadow: var(--shadow-soft);
+            min-width: 0;
+        }}
+        .filters .price-range-input {{
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            padding: 14px 4px;
+            font-size: 14px;
+            width: 100%;
+            min-width: 0;
+            color: var(--text);
+            appearance: textfield;
+            -moz-appearance: textfield;
+        }}
+        .filters .price-range-input:focus {{
+            outline: none;
+        }}
+        .filters .price-range-input::-webkit-outer-spin-button,
+        .filters .price-range-input::-webkit-inner-spin-button {{
+            -webkit-appearance: none;
+            margin: 0;
+        }}
+        .filters .price-range-prefix {{
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 600;
+        }}
+        .filters .price-range-sep {{
+            color: var(--muted);
+            font-size: 14px;
+            padding: 0 2px;
         }}
 
         
@@ -2581,6 +2642,14 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                 font-size: 16px;
             }}
 
+            .filters .price-range {{
+                padding: 0 12px;
+            }}
+            .filters .price-range-input {{
+                font-size: 16px; /* keep iOS Safari from auto-zooming on focus */
+                padding: 12px 4px;
+            }}
+
             .card-header {{
                 flex-direction: column;
             }}
@@ -2800,14 +2869,15 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                     <option value="unique/original">Unique/Original</option>
                     <option value="limited edition">Limited Edition</option>
                 </select>
-                <select id="priceFilter">
-                    <option value="">All Prices</option>
-                    <option value="under1000">Under $1,000</option>
-                    <option value="1000to2499">$1,000–$2,499</option>
-                    <option value="2500to4999">$2,500–$4,999</option>
-                    <option value="5000plus">$5,000+</option>
-                    <option value="unknown">Price on Request / Unknown</option>
-                </select>
+                <div class="price-range" role="group" aria-label="Price range filter">
+                    <span class="price-range-prefix" aria-hidden="true">$</span>
+                    <input id="priceMinInput" class="price-range-input" type="number" inputmode="numeric"
+                        min="0" step="1" placeholder="Min" aria-label="Minimum price">
+                    <span class="price-range-sep" aria-hidden="true">–</span>
+                    <span class="price-range-prefix" aria-hidden="true">$</span>
+                    <input id="priceMaxInput" class="price-range-input" type="number" inputmode="numeric"
+                        min="0" step="1" placeholder="Max" aria-label="Maximum price">
+                </div>
                 <select id="sortFilter">
                     <option value="newest">Sort: Newest</option>
                     <option value="oldest">Sort: Oldest</option>
@@ -2872,7 +2942,8 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
         const sellerFilter = document.getElementById("sellerFilter");
         const artistFilter = document.getElementById("artistFilter");
         const categoryFilter = document.getElementById("categoryFilter");
-        const priceFilter = document.getElementById("priceFilter");
+        const priceMinInput = document.getElementById("priceMinInput");
+        const priceMaxInput = document.getElementById("priceMaxInput");
         const sortFilter = document.getElementById("sortFilter");
         const grid = document.getElementById("catalogGrid");
         const cards = Array.from(document.querySelectorAll("#catalogGrid .card"));
@@ -2956,9 +3027,24 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             }}
         }}
 
-        function matchesPriceBand(priceBand, filterBand) {{
-            if (!filterBand) return true;
-            return priceBand === filterBand;
+        function parsePriceFilter(input) {{
+            // Treat blank / non-numeric as "no bound". Returns NaN for unbounded.
+            const raw = (input && input.value || "").trim().replace(/[$,\s]/g, "");
+            if (!raw) return NaN;
+            const n = Number(raw);
+            return isFinite(n) && n >= 0 ? n : NaN;
+        }}
+
+        function matchesPriceRange(cardPrice, minVal, maxVal) {{
+            // cardPrice is the data-price attribute as a Number; -1 means
+            // "price unknown / on request". Unknown listings only show when
+            // no min/max bound is set (i.e. the filter is fully empty).
+            const hasMin = !isNaN(minVal);
+            const hasMax = !isNaN(maxVal);
+            if (cardPrice < 0) return !hasMin && !hasMax;
+            if (hasMin && cardPrice < minVal) return false;
+            if (hasMax && cardPrice > maxVal) return false;
+            return true;
         }}
 
         function sortCards(visibleCards) {{
@@ -3003,7 +3089,8 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             const seller = sellerFilter.value;
             const artist = artistFilter.value;
             const category = categoryFilter.value;
-            const priceBand = priceFilter.value;
+            const priceMin = parsePriceFilter(priceMinInput);
+            const priceMax = parsePriceFilter(priceMaxInput);
             const savedIds = getSavedListings();
 
             let visibleCards = [];
@@ -3013,7 +3100,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                 const sellerValue = card.dataset.seller || "";
                 const artistValue = card.dataset.artist || "";
                 const categoryValue = card.dataset.category || "";
-                const cardPriceBand = card.dataset.priceBand || "";
+                const cardPrice = Number(card.dataset.price || -1);
                 const fullText = card.dataset.search || "";
                 const isPriceDrop = card.dataset.priceDrop === "true";
 
@@ -3023,7 +3110,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                 const matchesSeller = !seller || sellerValue === seller;
                 const matchesArtist = !artist || artistValue === artist;
                 const matchesCategory = !category || categoryValue === category;
-                const matchesPrice = matchesPriceBand(cardPriceBand, priceBand);
+                const matchesPrice = matchesPriceRange(cardPrice, priceMin, priceMax);
 
                 const visible = matchesSearch && matchesSaved && matchesPriceDrop && matchesSeller && matchesArtist && matchesCategory && matchesPrice;
                 card.classList.toggle("hidden", !visible);
@@ -3044,7 +3131,8 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             sellerFilter.value = "";
             artistFilter.value = "";
             categoryFilter.value = "";
-            priceFilter.value = "";
+            if (priceMinInput) priceMinInput.value = "";
+            if (priceMaxInput) priceMaxInput.value = "";
             sortFilter.value = "newest";
             applyFilters();
         }}
@@ -3172,7 +3260,7 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             }});
         }});
 
-        [searchInput, savedFilter, sellerFilter, artistFilter, categoryFilter, priceFilter, sortFilter].forEach((el) => {{
+        [searchInput, savedFilter, sellerFilter, artistFilter, categoryFilter, priceMinInput, priceMaxInput, sortFilter].forEach((el) => {{
             el.addEventListener("input", applyFilters);
             el.addEventListener("change", applyFilters);
         }});
@@ -3186,6 +3274,17 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
 
         updateSavedButtons();
         applyFilters();
+    </script>
+
+    <!-- Register the service worker so the catalog is installable as a PWA. -->
+    <script>
+        if ('serviceWorker' in navigator) {{
+            window.addEventListener('load', function () {{
+                navigator.serviceWorker
+                    .register('/sw.js')
+                    .catch(function () {{ /* swallow — non-blocking */ }});
+            }});
+        }}
     </script>
 </body>
 </html>"""
