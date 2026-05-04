@@ -1197,6 +1197,57 @@
             margin-top: 0;
         }
 
+        .seller-mood-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .seller-mood-label {
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .seller-mood-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.92);
+        }
+
+        .seller-mood-pill.mood-open {
+            background: #e6f5e8;
+            color: #1e5e2a;
+            border-color: #b8dfbf;
+        }
+
+        .seller-mood-pill.mood-firm {
+            background: #efeae0;
+            color: #4d3e23;
+            border-color: #d8cdb6;
+        }
+
+        .seller-mood-pill.mood-motivated {
+            background: #fbf3df;
+            color: #7a4d00;
+            border-color: #efd29d;
+        }
+
+        .seller-mood-pill.mood-testing {
+            background: #eef4ff;
+            color: #274060;
+            border-color: #cbd9ef;
+        }
+
         .email-seller-button {
             display: inline-flex;
             align-items: center;
@@ -1421,10 +1472,11 @@
                 margin: 0;
             }
 
+            /* On the 2-up mobile grid, the "Price Drop" pill takes too much
+               horizontal room and squeezes the category badge — the strikethrough
+               on the old price already conveys the price-drop concept. */
             .card .price-drop-label {
-                font-size: 8px;
-                padding: 2px 5px;
-                letter-spacing: 0.04em;
+                display: none;
             }
 
             .card .old-price {
@@ -1598,7 +1650,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="0.0"
+        data-newest="1776801883.0"
         data-search="chris derubeis mini elements mixed media on metal unique/original guy scuderi available entire set of 4 beautiful artworks!">
 
         <div class="card-image-wrap">
@@ -1627,7 +1679,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0001" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -1652,7 +1704,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed Media on Metal</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">11&quot; x 12&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23&quot; x 24&quot;</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 12 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed Media on Metal</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">11&quot; x 12&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23&quot; x 24&quot;</span></div></div>
 
                     
             <div class="modal-seller">
@@ -1661,10 +1713,11 @@
                 <div class="seller-location"><span class="location-label">Location:</span> <span class="location-value">Central NJ 08852</span></div>
                 
                     <div class="modal-seller-actions">
-                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:gjscuderi@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -1687,7 +1740,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="1.0"
+        data-newest="1776807960.0"
         data-search="kre8 baby blue acrylic painting on canvas unique/original nathaniel jones available a unique work">
 
         <div class="card-image-wrap">
@@ -1716,7 +1769,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0002" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -1741,7 +1794,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">20 x 20</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">24.5 x 24.5</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 12 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">20 x 20</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">24.5 x 24.5</span></div></div>
 
                     
             <div class="modal-seller">
@@ -1750,10 +1803,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -1776,7 +1830,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="3.0"
+        data-newest="1776846497.0"
         data-search="kre8 tiny red acrylic painting on canvas unique/original nathaniel jones available a unique work.">
 
         <div class="card-image-wrap">
@@ -1805,7 +1859,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0004" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -1830,7 +1884,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">20 x 20</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">24.5 x 24.5</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">20 x 20</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">24.5 x 24.5</span></div></div>
 
                     
             <div class="modal-seller">
@@ -1839,10 +1893,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -1865,7 +1920,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="4.0"
+        data-newest="1776848597.0"
         data-search="kre8 the love acrylic painting on canvas unique/original nathaniel jones available a unique work.  full insurance included.">
 
         <div class="card-image-wrap">
@@ -1894,7 +1949,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0005" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -1919,7 +1974,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">24 x 24</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">28.75 x 28.75</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">24 x 24</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">28.75 x 28.75</span></div></div>
 
                     
             <div class="modal-seller">
@@ -1928,10 +1983,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -1954,7 +2010,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="5.0"
+        data-newest="1776848871.0"
         data-search="crisx mini silver rose candy-color paint, urethane and enamel on brushed metal surface. unique/original nathaniel jones available a unique work.  full insurance included.">
 
         <div class="card-image-wrap">
@@ -1983,7 +2039,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0006" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2008,7 +2064,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Candy-color paint, urethane and enamel on brushed metal surface.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">12 x 12</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23 x 23</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Candy-color paint, urethane and enamel on brushed metal surface.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">12 x 12</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23 x 23</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2017,10 +2073,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -2043,7 +2100,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="6.0"
+        data-newest="1776849082.0"
         data-search="peter max the love on blends 2006 mixed media with acrylic painting and color lithography on paper. unique/original nathaniel jones available from 2006.  a unique work.  hand signed in acrylic by artist.  full insurance included.">
 
         <div class="card-image-wrap">
@@ -2072,7 +2129,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0007" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2097,7 +2154,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and color lithography on paper.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">10 x 8</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23.5 x 21.5</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and color lithography on paper.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">10 x 8</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23.5 x 21.5</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2106,10 +2163,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -2132,7 +2190,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="7.0"
+        data-newest="1776849252.0"
         data-search="ashton howard dancing light acrylic painting on canvas unique/original nathaniel jones available a unique work.  full insurance included.">
 
         <div class="card-image-wrap">
@@ -2161,7 +2219,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0008" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2186,7 +2244,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">40 x 16</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">49.25 x 25.25</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">40 x 16</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">49.25 x 25.25</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2195,10 +2253,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -2221,7 +2280,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="8.0"
+        data-newest="1776849464.0"
         data-search="justin strom center of attention mixed media, acrylic, painting on canvas, raised bubbles, ink and epoxy. unique/original nathaniel jones available a unique work.  full insurance included.">
 
         <div class="card-image-wrap">
@@ -2250,7 +2309,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0009" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2275,7 +2334,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media, acrylic, painting on canvas, raised bubbles, ink and epoxy.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16 x 16</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">None</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media, acrylic, painting on canvas, raised bubbles, ink and epoxy.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16 x 16</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">None</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2284,10 +2343,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -2310,7 +2370,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="false"
-        data-newest="9.0"
+        data-newest="1776849688.0"
         data-search="matt beyrer falling grace oil painting on wood unique/original nathaniel jones available a unique work.  full insurance included. park west appraisal included, but paper coa was misplaced and not included.  this artwork is in my park west clarity account and digital ownership can be transferred if desired.">
 
         <div class="card-image-wrap">
@@ -2339,7 +2399,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0010" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2364,7 +2424,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge badge-warn">No COA</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Oil Painting on wood</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">36 x 18</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">46.25 x 28.25</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Oil Painting on wood</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">36 x 18</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">46.25 x 28.25</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2373,10 +2433,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -2399,7 +2460,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="11.0"
+        data-newest="1776850385.0"
         data-search="romero britto holidays xxv 3d, hand embellished, mixed-media construction, with acrylic paint, oil pen drawing and hand applied diamond dust in color serigraph. unique/original nathaniel jones available a unique work, and overpainted.  full insurance included. nbjones85@gmail.com">
 
         <div class="card-image-wrap">
@@ -2428,7 +2489,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0012" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2453,7 +2514,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">3D, Hand Embellished, mixed-media construction, with acrylic paint, oil pen drawing and hand applied diamond dust in color Serigraph.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">13 x 15.25</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">21 x 23</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">3D, Hand Embellished, mixed-media construction, with acrylic paint, oil pen drawing and hand applied diamond dust in color Serigraph.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">13 x 15.25</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">21 x 23</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2462,10 +2523,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -2488,7 +2550,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="12.0"
+        data-newest="1776850847.0"
         data-search="romero britto mona lisa mixed media painting on three-dimensional paper construction, with acrylic paint, oil pen drawing and hand-applied diamond dust on color serigraph. unique/original nathaniel jones available a unique work.  full insurance included.">
 
         <div class="card-image-wrap">
@@ -2517,7 +2579,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0013" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2542,7 +2604,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media painting on three-dimensional paper construction, with acrylic paint, oil pen drawing and hand-applied diamond dust on color serigraph.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">28.5 x 22.5</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">37 x 30.75</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media painting on three-dimensional paper construction, with acrylic paint, oil pen drawing and hand-applied diamond dust on color serigraph.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">28.5 x 22.5</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">37 x 30.75</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2551,10 +2613,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -2577,7 +2640,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="13.0"
+        data-newest="1776851040.0"
         data-search="peter max liberty head ii on blends mixed media with acrylic painting and color lithography on paper.  signed in acrylic. unique/original nathaniel jones available a unique work.  full insurance included.  from 2006.nbjones85@gmail.com">
 
         <div class="card-image-wrap">
@@ -2606,7 +2669,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0014" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2631,7 +2694,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and color lithography on paper.  Signed in acrylic.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">10 x 8</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23.5 x 21.5</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and color lithography on paper.  Signed in acrylic.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">10 x 8</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23.5 x 21.5</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2640,10 +2703,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -2666,7 +2730,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="14.0"
+        data-newest="1776851191.0"
         data-search="crisx mini red rose candy-color paint, urethane and enamel on a brushed metal surface. hand-signed in pigment lower right by the artist. unique/original nathaniel jones available a unique work.  full insurance included.nbjones85@gmail.com">
 
         <div class="card-image-wrap">
@@ -2695,7 +2759,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0015" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2720,7 +2784,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Candy-Color paint, urethane and enamel on a brushed metal surface. Hand-signed in pigment lower right by the artist.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">12 1/8 x 12</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23 x 23</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Candy-Color paint, urethane and enamel on a brushed metal surface. Hand-signed in pigment lower right by the artist.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">12 1/8 x 12</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23 x 23</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2729,10 +2793,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -2755,7 +2820,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="15.0"
+        data-newest="1776851511.0"
         data-search="kre8 day dream mixed media with acrylic painting and giclee on canvas. hand-signed in pigment lower left by the artist. unique/original nathaniel jones available a unique work. from 2019. full insurance included.nbjones85@gmail.com">
 
         <div class="card-image-wrap">
@@ -2784,7 +2849,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0016" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2809,7 +2874,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and giclee on canvas. Hand-signed in pigment lower left by the artist.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16 x 20</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">18.75 x 33</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and giclee on canvas. Hand-signed in pigment lower left by the artist.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16 x 20</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">18.75 x 33</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2818,10 +2883,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -2844,7 +2910,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="false"
-        data-newest="16.0"
+        data-newest="1776851749.0"
         data-search="kre8 day dream mixed media with acrylic painting and giclee on canvas. hand-signed in pigment lower left by the artist unique/original nathaniel jones available unique work. from 2019. full insurance included.  park west appraisal included.  paper coa was misplaced, but this artwork is in my clarity account, and digital ownership can be transferred through park west.">
 
         <div class="card-image-wrap">
@@ -2873,7 +2939,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0017" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2898,7 +2964,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge badge-warn">No COA</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and giclee on canvas. Hand-signed in pigment lower left by the artist</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16 x 20</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">29 x 33</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and giclee on canvas. Hand-signed in pigment lower left by the artist</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16 x 20</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">29 x 33</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2907,10 +2973,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -2933,7 +3000,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="17.0"
+        data-newest="1776851853.0"
         data-search="kre8 day dream mixed media with acrylic painting and giclee on canvas. hand-signed in pigment lower left by the artist unique/original nathaniel jones available unique work. full insurance included. from 2020.nbjones85@gmail.com">
 
         <div class="card-image-wrap">
@@ -2962,7 +3029,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0018" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -2987,7 +3054,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and giclee on canvas. Hand-signed in pigment lower left by the artist</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16 x 20</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">24.5 x 28</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and giclee on canvas. Hand-signed in pigment lower left by the artist</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16 x 20</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">24.5 x 28</span></div></div>
 
                     
             <div class="modal-seller">
@@ -2996,10 +3063,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -3022,7 +3090,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="18.0"
+        data-newest="1776852411.0"
         data-search="ziggy o’leary the pink heart acrylic painting on canvas on a board. unique/original nathaniel jones available a unique work. full insurance include included. from 2024.nbjones85@gmail.com">
 
         <div class="card-image-wrap">
@@ -3051,7 +3119,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0019" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -3076,7 +3144,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on canvas on a board.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16 x 12</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">26 x 22</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on canvas on a board.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16 x 12</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">26 x 22</span></div></div>
 
                     
             <div class="modal-seller">
@@ -3085,10 +3153,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -3111,7 +3180,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="19.0"
+        data-newest="1776852550.0"
         data-search="ziggy o’leary neon peace, love and happiness acrylic painting on board unique/original nathaniel jones available unique work. full insurance included. from 2024.nbjones85@gmail.com">
 
         <div class="card-image-wrap">
@@ -3140,7 +3209,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0020" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -3165,7 +3234,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on board</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">12 x 16</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">21 7/8 x 25 7/8</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Acrylic painting on board</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">12 x 16</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">21 7/8 x 25 7/8</span></div></div>
 
                     
             <div class="modal-seller">
@@ -3174,10 +3243,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -3200,7 +3270,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="false"
-        data-newest="20.0"
+        data-newest="1776853037.0"
         data-search="peter max libery head ii collage (large) mixed media with acrylic painting and collage on paper from the peter max studio. signed in acrylic by the artist. unique/original nathaniel jones available a unique work.  appraisal included.  paper coa misplaced, but digital ownership through park west transfer is available upon request as this artwork is in my clarity account.  from 1997.">
 
         <div class="card-image-wrap">
@@ -3229,7 +3299,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0021" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -3254,7 +3324,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge badge-warn">No COA</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and collage on paper from the Peter Max Studio. Signed in acrylic by the artist.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">14 x 12.5</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23.25 x 21.5</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Mixed media with acrylic painting and collage on paper from the Peter Max Studio. Signed in acrylic by the artist.</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">14 x 12.5</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23.25 x 21.5</span></div></div>
 
                     
             <div class="modal-seller">
@@ -3263,10 +3333,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -3289,7 +3360,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="21.0"
+        data-newest="1776863428.0"
         data-search="jeff vermeeren edge of truth original mixed media on aluminum unique/original nathaniel jones available a unique work. full insurance included. artwork from 2024.  nbjones85@gmail.com">
 
         <div class="card-image-wrap">
@@ -3318,7 +3389,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0022" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -3343,7 +3414,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Original mixed media on aluminum</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">25.75 x 17.75</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">35 x 27</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Original mixed media on aluminum</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">25.75 x 17.75</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">35 x 27</span></div></div>
 
                     
             <div class="modal-seller">
@@ -3352,10 +3423,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -3378,7 +3450,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="22.0"
+        data-newest="1776863597.0"
         data-search="jeff vermeeren aquarius beluga hope original mixed media painting on aluminum unique/original nathaniel jones available a unique work.  full insurance included. artwork from 2023.">
 
         <div class="card-image-wrap">
@@ -3407,7 +3479,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0023" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -3432,7 +3504,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Original mixed media painting on aluminum</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">25.75 x 17.75</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">28 x 20</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 11 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Original mixed media painting on aluminum</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">25.75 x 17.75</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">28 x 20</span></div></div>
 
                     
             <div class="modal-seller">
@@ -3441,10 +3513,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -3467,7 +3540,7 @@
         data-price-drop="true"
         data-shipping="true"
         data-coa="true"
-        data-newest="24.0"
+        data-newest="1777270763.0"
         data-search="michael godard grape toast limited edition seriolithograph on paper limited edition guy scuderi available been sold out for years and hard to find! hand signed limited edition #22/395. seriolithograph on wove paper (combination of serigraphy + lithography for added depth and texture).">
 
         <div class="card-image-wrap">
@@ -3504,7 +3577,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0025" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -3537,7 +3610,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Limited edition seriolithograph on paper</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16” x 20”</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">28” x 31”</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 6 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Limited edition seriolithograph on paper</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">16” x 20”</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">28” x 31”</span></div></div>
 
                     
             <div class="modal-seller">
@@ -3546,10 +3619,11 @@
                 <div class="seller-location"><span class="location-label">Location:</span> <span class="location-value">Central NJ 08852</span></div>
                 
                     <div class="modal-seller-actions">
-                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:Gjscuderi@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -3572,7 +3646,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="25.0"
+        data-newest="1777270966.0"
         data-search="peter max better world limited edition serigraph on paper limited edition guy scuderi available hors commerce edition of 50. hand signed in pencil by peter max. comes with a coa and appraisal. in great condition. gallery retail: $3600!">
 
         <div class="card-image-wrap">
@@ -3601,7 +3675,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0026" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -3626,7 +3700,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Limited edition Serigraph on paper</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">11” x 26.25”</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23” x 38”</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 6 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Limited edition Serigraph on paper</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">11” x 26.25”</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">23” x 38”</span></div></div>
 
                     
             <div class="modal-seller">
@@ -3635,10 +3709,11 @@
                 <div class="seller-location"><span class="location-label">Location:</span> <span class="location-value">Central NJ 08852</span></div>
                 
                     <div class="modal-seller-actions">
-                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:Gjscuderi@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -3661,7 +3736,7 @@
         data-price-drop="true"
         data-shipping="true"
         data-coa="false"
-        data-newest="26.0"
+        data-newest="1777271115.0"
         data-search="david le batard (lebo) ray of hope limited edition caldograph limited edition guy scuderi available beautiful brand new custom frame. no paperwork but comes with a pw registration sticker on verso. in great condition.">
 
         <div class="card-image-wrap">
@@ -3698,7 +3773,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0027" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -3731,7 +3806,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge badge-warn">No COA</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Limited Edition Caldograph</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">17” x 17”</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">24” x 24”</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 6 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Limited Edition Caldograph</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">17” x 17”</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">24” x 24”</span></div></div>
 
                     
             <div class="modal-seller">
@@ -3740,10 +3815,11 @@
                 <div class="seller-location"><span class="location-label">Location:</span> <span class="location-value">Central NJ 08852</span></div>
                 
                     <div class="modal-seller-actions">
-                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:Gjscuderi@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -3766,7 +3842,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="27.0"
+        data-newest="1777282959.0"
         data-search="jon rattenbury new beginnings 3dimensional acrylic/epoxy on aluminum unique/original guy scuderi available gorgeous original. the tree really pops off the artwork in 3d! comes with an older appraisal. retails for over $6k!">
 
         <div class="card-image-wrap">
@@ -3795,7 +3871,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0028" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -3820,7 +3896,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">3Dimensional Acrylic/Epoxy on Aluminum</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">24&quot; x 24&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">30&quot; x 30&quot;</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 6 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">3Dimensional Acrylic/Epoxy on Aluminum</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">24&quot; x 24&quot;</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">30&quot; x 30&quot;</span></div></div>
 
                     
             <div class="modal-seller">
@@ -3829,10 +3905,11 @@
                 <div class="seller-location"><span class="location-label">Location:</span> <span class="location-value">Central NJ 08852</span></div>
                 
                     <div class="modal-seller-actions">
-                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://facebook.com/guyscuderi" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:gjscuderi@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -3855,7 +3932,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="30.0"
+        data-newest="1777500659.0"
         data-search="kre8 second line love giclee on canvas limited edition nathaniel jones available brand new!">
 
         <div class="card-image-wrap">
@@ -3884,7 +3961,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0031" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -3909,7 +3986,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Giclee on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">32 x 16</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">36.5 x 20.5</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 4 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Giclee on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">32 x 16</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">36.5 x 20.5</span></div></div>
 
                     
             <div class="modal-seller">
@@ -3918,10 +3995,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:Nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -3944,7 +4022,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="31.0"
+        data-newest="1777502319.0"
         data-search="kre8 influenced by kre8tion giclee in color with hand-embellishment on canvas limited edition nathaniel jones available coa and appraisal included">
 
         <div class="card-image-wrap">
@@ -3973,7 +4051,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0032" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -3998,7 +4076,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Giclee in color with hand-embellishment on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">22.5 x 22.5</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">27 x 27</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 4 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Giclee in color with hand-embellishment on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">22.5 x 22.5</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">27 x 27</span></div></div>
 
                     
             <div class="modal-seller">
@@ -4007,10 +4085,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -4033,7 +4112,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="32.0"
+        data-newest="1777502866.0"
         data-search="ron agam to love is to live holographic and lenticular multiple in the fourth dimension limited edition nathaniel jones available from 2018. park west certificate of authenticity and appraisal included.">
 
         <div class="card-image-wrap">
@@ -4062,7 +4141,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0033" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -4087,7 +4166,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Holographic and lenticular multiple in the fourth dimension</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">14 x 14</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">28.5 x 28.5</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 4 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Holographic and lenticular multiple in the fourth dimension</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">14 x 14</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">28.5 x 28.5</span></div></div>
 
                     
             <div class="modal-seller">
@@ -4096,10 +4175,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -4122,7 +4202,7 @@
         data-price-drop="false"
         data-shipping="false"
         data-coa="true"
-        data-newest="33.0"
+        data-newest="1777503481.0"
         data-search="jim warren dream on giclee in color with hand-embellishment on canvas limited edition nathaniel jones available brand new! park west certificate of authenticity and appraisal included. artwork from 2025.">
 
         <div class="card-image-wrap">
@@ -4151,7 +4231,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0034" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -4176,7 +4256,7 @@
 
                     <div class="modal-badges"><span class="badge badge-warn">Shipping Extra</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Giclee in color with hand-embellishment on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">22 x 17 5/8</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">39 3/8 x 25</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 4 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Giclee in color with hand-embellishment on canvas</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">22 x 17 5/8</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">39 3/8 x 25</span></div></div>
 
                     
             <div class="modal-seller">
@@ -4185,10 +4265,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
@@ -4211,7 +4292,7 @@
         data-price-drop="false"
         data-shipping="true"
         data-coa="true"
-        data-newest="34.0"
+        data-newest="1777503833.0"
         data-search="orlando quevedo a day of love dye sublimation on aluminum limited edition nathaniel jones available brand new. includes park west certificate of authenticity and appraisal. from 2017.featuring art by:pablo picassovincent van goghrene magritteclaude monetgeorgia o’keefealphonse mucha…amongst others">
 
         <div class="card-image-wrap">
@@ -4240,7 +4321,7 @@
             </div>
 
             <div class="card-actions">
-                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                 <button class="show-more-button" type="button" data-listing-id="listing_0035" aria-label="Show more details">Show More <span class="chevron">▾</span></button>
             </div>
         </div>
@@ -4265,7 +4346,7 @@
 
                     <div class="modal-badges"><span class="badge">Shipping Included</span><span class="badge">COA Included</span></div>
 
-                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Dye sublimation on aluminum</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">11.5 x 13.5</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">22 x 24</span></div></div>
+                    <div class="modal-specs"><div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">Listed 4 days ago</span></div><div class="spec-row"><span class="spec-label">Type</span><span class="spec-value">Dye sublimation on aluminum</span></div><div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">11.5 x 13.5</span></div><div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">22 x 24</span></div></div>
 
                     
             <div class="modal-seller">
@@ -4274,10 +4355,11 @@
                 
                 
                     <div class="modal-seller-actions">
-                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Contact Seller</a>
+                        <a href="https://www.facebook.com/nathaniel.jones.94" target="_blank" rel="noopener noreferrer" class="contact-seller-button">Message on Facebook</a>
                         <a href="mailto:nbjones85@gmail.com" class="email-seller-button">Email Seller</a>
                     </div>
             
+                
             </div>
         
 
