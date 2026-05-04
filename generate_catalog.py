@@ -77,6 +77,7 @@ INPUT_TO_OUTPUT = {
     "certificate_of_authenticity_included": "certificate_of_authenticity_included",
     "seller_notes": "seller_notes",
     "seller_location": "seller_location",
+    "seller_mood": "seller_mood",
 }
 
 OUTPUT_COLUMNS = [
@@ -94,6 +95,7 @@ OUTPUT_COLUMNS = [
     "certificate_of_authenticity_included",
     "seller_notes",
     "seller_location",
+    "seller_mood",
     "image_file",
     "source_image_url",
     "processed_at",
@@ -319,6 +321,11 @@ def parse_datetime(value):
         "%Y-%m-%d %H:%M:%S.%f",
         "%Y-%m-%d %H:%M:%S",
         "%Y-%m-%d",
+        # Google Forms exports the Timestamp column in US format like
+        # "1/15/2026 12:34:56" — accept both 12-hour and 24-hour variants.
+        "%m/%d/%Y %H:%M:%S",
+        "%m/%d/%Y %I:%M:%S %p",
+        "%m/%d/%Y",
     ]
 
     for fmt in formats:
@@ -439,12 +446,40 @@ def build_badges(row):
     return "".join(badges)
 
 
+def listed_for_text(row):
+    """Return a friendly 'Listed today / yesterday / N days ago' string from the
+    row's processed_at timestamp, or empty string if the timestamp can't be parsed."""
+    dt = parse_datetime(row.get("processed_at"))
+    if dt is None:
+        return ""
+
+    if dt.tzinfo:
+        now = datetime.now(dt.tzinfo)
+    else:
+        now = datetime.now()
+
+    delta_days = (now - dt).days
+    if delta_days < 0:
+        return ""
+    if delta_days == 0:
+        return "Listed today"
+    if delta_days == 1:
+        return "Listed yesterday"
+    return f"Listed {delta_days} days ago"
+
+
 def build_specs(row):
     specs = []
 
+    listed_for = listed_for_text(row)
     medium = (row.get("medium") or "").strip()
     artwork_size = (row.get("artwork_size_inches") or "").strip()
     framed_size = (row.get("framed_size_inches") or "").strip()
+
+    if listed_for:
+        specs.append(
+            f'<div class="spec-row"><span class="spec-label">Listed</span><span class="spec-value">{safe_text(listed_for)}</span></div>'
+        )
 
     if medium:
         specs.append(
@@ -575,7 +610,7 @@ def build_card(row, image_src):
         safe_url = html.escape(seller_profile_url, quote=True)
         contact_button_html = (
             f'<a href="{safe_url}" target="_blank" rel="noopener noreferrer" '
-            f'class="contact-seller-button">Contact Seller</a>'
+            f'class="contact-seller-button">Message on Facebook</a>'
         )
 
     show_more_button_html = (
@@ -629,6 +664,25 @@ def build_card(row, image_src):
             f'</div>'
         )
 
+    # Seller mood pill — sits with the seller actions, color-coded so buyers can
+    # read the seller's stance at a glance.
+    seller_mood_raw = (row.get("seller_mood") or "").strip()
+    seller_mood_html = ""
+    if seller_mood_raw and not is_sold:
+        mood_lookup = {
+            "Open to Offers": "mood-open",
+            "Price Firm": "mood-firm",
+            "Motivated to Sell": "mood-motivated",
+            "Testing the Market": "mood-testing",
+        }
+        mood_class = mood_lookup.get(seller_mood_raw, "mood-default")
+        seller_mood_html = (
+            f'<div class="seller-mood-row">'
+            f'<span class="seller-mood-label">Seller note</span>'
+            f'<span class="seller-mood-pill {mood_class}">{safe_text(seller_mood_raw)}</span>'
+            f'</div>'
+        )
+
     modal_seller_html = ""
     if seller_name_raw:
         modal_seller_actions = ""
@@ -645,6 +699,7 @@ def build_card(row, image_src):
                 <span class="seller-name">{seller_name}</span>
                 {seller_location_html}
                 {modal_seller_actions}
+                {seller_mood_html}
             </div>
         """
     elif seller_location_html:
@@ -2511,6 +2566,57 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
             margin-top: 0;
         }}
 
+        .seller-mood-row {{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }}
+
+        .seller-mood-label {{
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }}
+
+        .seller-mood-pill {{
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.92);
+        }}
+
+        .seller-mood-pill.mood-open {{
+            background: #e6f5e8;
+            color: #1e5e2a;
+            border-color: #b8dfbf;
+        }}
+
+        .seller-mood-pill.mood-firm {{
+            background: #efeae0;
+            color: #4d3e23;
+            border-color: #d8cdb6;
+        }}
+
+        .seller-mood-pill.mood-motivated {{
+            background: #fbf3df;
+            color: #7a4d00;
+            border-color: #efd29d;
+        }}
+
+        .seller-mood-pill.mood-testing {{
+            background: #eef4ff;
+            color: #274060;
+            border-color: #cbd9ef;
+        }}
+
         .email-seller-button {{
             display: inline-flex;
             align-items: center;
@@ -2735,10 +2841,11 @@ def generate_html(data, images_path: Path, output_path: Path, title, month_label
                 margin: 0;
             }}
 
+            /* On the 2-up mobile grid, the "Price Drop" pill takes too much
+               horizontal room and squeezes the category badge — the strikethrough
+               on the old price already conveys the price-drop concept. */
             .card .price-drop-label {{
-                font-size: 8px;
-                padding: 2px 5px;
-                letter-spacing: 0.04em;
+                display: none;
             }}
 
             .card .old-price {{
