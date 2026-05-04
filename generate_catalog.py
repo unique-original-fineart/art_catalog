@@ -488,12 +488,12 @@ def build_specs(row):
 
     if artwork_size:
         specs.append(
-            f'<div class="spec-row"><span class="spec-label">Artwork Size</span><span class="spec-value">{safe_text(artwork_size)}</span></div>'
+            f'<div class="spec-row"><span class="spec-label">Artwork Size (Inches)</span><span class="spec-value">{safe_text(artwork_size)}</span></div>'
         )
 
     if framed_size:
         specs.append(
-            f'<div class="spec-row"><span class="spec-label">Framed Size</span><span class="spec-value">{safe_text(framed_size)}</span></div>'
+            f'<div class="spec-row"><span class="spec-label">Framed Size (Inches)</span><span class="spec-value">{safe_text(framed_size)}</span></div>'
         )
 
     return "".join(specs)
